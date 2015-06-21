@@ -482,7 +482,7 @@ or
 > Step 1: Add the jar dependency spring-aop to your project (in pom.xml if maven).
 
 > Step 2: Make sure the Spring configuration file (`net/bull/javamelody/monitoring-spring.xml`,
-> [included](http://code.google.com/p/javamelody/source/browse/trunk/javamelody-core/src/main/resources/net/bull/javamelody/monitoring-spring.xml) in the provided jar) is loaded as one of the first configuration files.
+> [included](../master/javamelody-core/src/main/resources/net/bull/javamelody/monitoring-spring.xml) in the provided jar) is loaded as one of the first configuration files.
 
 > For example, if you use the `org.springframework.web.context.ContextLoaderListener` in your
 > `web.xml` the `contextConfigLocation` context parameter will look something like this:
@@ -589,7 +589,7 @@ or
   * Alternative in order to use AspectJ, in case that proxies don't work (thanks to [Witek Wolejszo](http://touk.pl/blog/2011/03/07/javamelody-spring-and-aspectj/))
 > Sometimes proxies can't work is some circumstances, for example if you don't use interfaces.
 > In this case, it is possible to use AspectJ with the following context file:
-> `net/bull/javamelody/monitoring-spring-aspectj.xml`, [included](http://code.google.com/p/javamelody/source/browse/trunk/javamelody-core/src/main/resources/net/bull/javamelody/monitoring-spring-aspectj.xml) in the provided jar, instead of
+> `net/bull/javamelody/monitoring-spring-aspectj.xml`, [included](../master/javamelody-core/src/main/resources/net/bull/javamelody/monitoring-spring-aspectj.xml) in the provided jar, instead of
 > `net/bull/javamelody/monitoring-spring.xml`.
 
 > You can then use the @MonitoredWithSpring annotation as said above,
