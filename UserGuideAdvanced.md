@@ -394,7 +394,7 @@ or use the following asadmin command
 
 ` asadmin create-custom-resource --restype javax.naming.spi.ObjectFactory --factoryclass javamelody.CachedObjectFactory --property jndi-ref=jdbc/MyDataSource_uncached jdbc/MyDataSource `
 
-or you can use the ` asadmin add-resources /path/to/sample-resource.xml ` command with the file [sample-resource.xml](http://javamelody.googlecode.com/svn/trunk/javamelody-core/src/main/objectfactory/javamelody/sample-resource.xml)
+or you can use the ` asadmin add-resources /path/to/sample-resource.xml ` command with the file [sample-resource.xml](../master/javamelody-core/src/main/objectfactory/javamelody/sample-resource.xml)
 
   * Then in the details of the resource in the GlassFish admin console, define the target of the custom resource if the monitored webapp is deployed on another target instance than the Admin Server
   * Test: Webapp uses "jdbc/MyDataSource" as before to lookup from JNDI (and now it is the custom resource referencing "jdbc/MyDataSource\_uncached"). After some usage of the webapp, the statistics of the SQL requests should be displayed in the monitoring report.
