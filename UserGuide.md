@@ -524,6 +524,7 @@ or
 > These alternatives are not exclusive: you can use one and complete it with another.
 
   * Alternative to step 3: Use of an annotation of JavaMelody.
+
 > (implies that the library javamelody.jar is included in your classpath for compilation)
 
 > Just add the annotation `@net.bull.javamelody.MonitoredWithSpring` to all implementation classes and/or interfaces and/or methods of interfaces which you want to monitor, without modification of your applicationContext.xml file. For example:
@@ -556,6 +557,7 @@ or
 > you can add (name="my business use case") in brackets after the annotation on your class or on your method.
 
   * Alternative to step 3: Use of JdkRegexpMethodPointcut.
+
 > Assuming that the business façades can be found with a regular expression,
 > add the following lines in your applicationContext.xml file and adapt the value of the regular expression pattern:
 
@@ -570,6 +572,7 @@ or
 ```
 
   * Alternative to step 3: Use of any pointcut provided by Spring or writing of your own pointcut.
+
 > You can use any [pointcut](http://docs.spring.io/spring/docs/2.5.x/api/index.html)
 > provided by Spring or you can write your own.
 > For example, you can create a class `com.xyz.someapp.service.MonitoringPointcut`
@@ -587,6 +590,7 @@ or
 > of Spring AOP advises to use JDK dynamic proxies and not CGLIB, which should pose no problem for facades with separate interfaces and implementations.
 
   * Alternative in order to use AspectJ, in case that proxies don't work (thanks to [Witek Wolejszo](http://touk.pl/blog/2011/03/07/javamelody-spring-and-aspectj/))
+
 > Sometimes proxies can't work is some circumstances, for example if you don't use interfaces.
 > In this case, it is possible to use AspectJ with the following context file:
 > `net/bull/javamelody/monitoring-spring-aspectj.xml`, [included](../master/javamelody-core/src/main/resources/net/bull/javamelody/monitoring-spring-aspectj.xml) in the provided jar, instead of
