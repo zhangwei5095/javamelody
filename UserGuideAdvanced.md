@@ -140,7 +140,7 @@ For standard documentation, see [UserGuide](UserGuide.md)
 
 > The collect server can send weekly, daily or monthly reports by mail for each monitored application. For this, use in the collect server (in Tomcat context for example) exactly the same mail session, the same parameters and the same jar files as those in [Weekly, daily or monthly reports by mail](UserGuide.md#14-weekly-daily-or-monthly-reports-by-mail).
 
-> If xml format is desired instead of java serialization as transport format between a collect server and monitored applications, a parameter `transport-format` which is specific to the collect server can be added with 'xml' for value. The java serialization is the transport format by default and it is recommended for best performances (75% more performance for response time, according to this [benchmark](http://code.google.com/p/thrift-protobuf-compare/wiki/Benchmarking?ts=1237772203&updated=Benchmarking)). The xml transport format needs a dependency on libraries xstream (BSD) and xpp3 (Public Domain) in the monitored webapps.
+> If xml format is desired instead of java serialization as transport format between a collect server and monitored applications, a parameter `transport-format` which is specific to the collect server can be added with 'xml' for value. The java serialization is the transport format by default and it is recommended for best performances. The xml transport format needs a dependency on libraries xstream (BSD) and xpp3 (Public Domain) in the monitored webapps.
 
 ### 3. Simpler alternative of deployment of the webapp of monitoring ###
 
