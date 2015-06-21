@@ -22,7 +22,7 @@
     * [11. JSF Actions](#11-jsf-actions)
     * [12. Struts 2 Actions](#12-struts-2-actions)
     * [13. Batch jobs (if Quartz)](#13-batch-jobs-if-quartz)
-    * [14. Weekly, daily or monthly reports by mail](#14-weekly,-daily-or-monthly-reports-by-mail)
+    * [14. Weekly, daily or monthly reports by mail](#14-weekly-daily-or-monthly-reports-by-mail)
     * [15. Database user](#15-database-user)
     * [16. Security](#16-security)
     * [17. SecurityManager](#17-securitymanager)
