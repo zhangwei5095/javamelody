@@ -4,7 +4,7 @@ For standard documentation, see [UserGuide](UserGuide.md)
 
 ## Table of contents ##
 
-  * [Setup JavaMelody in an ear file](#setup-in-an-ear-file)
+  * [Setup JavaMelody in an ear file](#setup-javamelody-in-an-ear-file)
     * [1. Jar files](#1-jar-files)
     * [2. web.xml file](#2-webxml-file)
     * [3. First results](#3-first-results)
