@@ -1,35 +1,35 @@
 # Description and documentation of Java Melody : monitoring of Java EE applications #
 
 ## Table of contents ##
-  * [Introduction](#Introduction.md)
-  * [Overhead](#Overhead.md)
-  * [Jenkins Plugin](#Jenkins_Plugin.md)
-  * [Atlassian JIRA, Confluence and Bamboo Plugin](#Atlassian_JIRA,_Confluence_and_Bamboo_Plugin.md)
-  * [Liferay Plugin](#Liferay_Plugin.md)
-  * [Sonar Plugin](#Sonar_Plugin.md)
-  * [Grails Plugin](#Grails_Plugin.md)
-  * [JavaMelody Setup](#Setup.md)
-    * [1. Jar files](#1._Jar_files.md)
-    * [2. web.xml file](#2._web.xml_file.md)
-    * [3. First results](#3._First_results.md)
-    * [4. PDF report generation](#4._PDF_report_generation.md)
-    * [5. Supplements in web.xml](#5._Supplements_in_web.xml.md)
-    * [6. Optional parameters](#6._Optional_parameters.md)
-    * [7. JDBC](#7._JDBC.md)
-    * [8. Business facades (ejb-jar.xml file if EJB3)](#8._Business_facades_(ejb-jar.xml_file_if_EJB3).md)
-    * [9. Business facades (if Spring)](#9._Business_facades_(if_Spring).md)
-    * [10. Business facades (if Guice)](#10._Business_facades_(if_Guice).md)
-    * [11. JSF Actions](#11._JSF_Actions.md)
-    * [12. Struts 2 Actions](#12._Struts_2_Actions.md)
-    * [13. Batch jobs (if Quartz)](#13._Batch_jobs_(if_Quartz).md)
-    * [14. Weekly, daily or monthly reports by mail](#14._Weekly,_daily_or_monthly_reports_by_mail.md)
-    * [15. Database user](#15._Database_user.md)
-    * [16. Security](#16._Security.md)
-    * [17. SecurityManager](#17..md)
-    * [18. Full results](#18._Full_results.md)
-  * [Dependencies](#Dependencies.md)
-  * [Advanced documentation (setup with an ear, centralized collect server, monitoring of sql requests in GlassFish v3, JBoss AS 7, JonAS 5, debugging logs...)](#Advanced_documentation_(setup_with_an_ear,_centralized_collect_s.md)
-  * [Compilation and development](#Compilation_and_development.md)
+  * [Introduction](#introduction)
+  * [Overhead](#overhead)
+  * [Jenkins Plugin](#jenkins-plugin)
+  * [Atlassian JIRA, Confluence and Bamboo Plugin](#atlassian-jira-confluence-and-bamboo-plugin)
+  * [Liferay Plugin](#liferay-plugin)
+  * [Sonar Plugin](#sonar-plugin)
+  * [Grails Plugin](#grails-plugin)
+  * [JavaMelody Setup](#setup)
+    * [1. Jar files](#1-jar-files)
+    * [2. web.xml file](#2-web.xml-file)
+    * [3. First results](#3-first-results)
+    * [4. PDF report generation](#4-pdf-report-generation)
+    * [5. Supplements in web.xml](#5-supplements-in-web.xml)
+    * [6. Optional parameters](#6-optional-parameters)
+    * [7. JDBC](#7-jdbc)
+    * [8. Business facades (ejb-jar.xml file if EJB3)](#8-business-facades-ejb-jar.xml-file-if-EJB3)
+    * [9. Business facades (if Spring)](#9-business-facades-if-spring)
+    * [10. Business facades (if Guice)](#10-business-facades-if-guice)
+    * [11. JSF Actions](#11-jsf-actions)
+    * [12. Struts 2 Actions](#12-struts-2-actions)
+    * [13. Batch jobs (if Quartz)](#13-batch-jobs-if-quartz)
+    * [14. Weekly, daily or monthly reports by mail](#14-weekly,-daily-or-monthly-reports-by-mail)
+    * [15. Database user](#15-database-user)
+    * [16. Security](#16-security)
+    * [17. SecurityManager](#17-securitymanager)
+    * [18. Full results](#18-full-results)
+  * [Dependencies](#dependencies)
+  * [Advanced documentation (setup with an ear, centralized collect server, monitoring of sql requests in GlassFish v3, JBoss AS 7, JonAS 5, debugging logs...)](#advanced-documentation-setup-with-an-ear-centralized-collect-server-sql-requests-in-glassfish-v3-jboss-as-7-jonas-5-debugging-logs)
+  * [Compilation and development](#compilation-and-development)
 
 ## Introduction ##
 
@@ -149,7 +149,7 @@ Some discussions on the monitoring [overhead in production](Overhead.md) were ar
 > Copy the files [javamelody.jar](https://github.com/javamelody/javamelody/releases) and [jrobin-x.jar](http://javamelody.googlecode.com/files/jrobin-1.5.9.jar), located at the root of the supplied [javamelody.zip](https://github.com/javamelody/javamelody/releases) file,
 > to the WEB-INF/lib directory of the war of the webapp to monitor.
 
-> Or if you use Maven, add the javamelody-core [dependency](UserGuide#Dependencies.md) in the pom.xml file of your webapp.
+> Or if you use Maven, add the javamelody-core [dependency](#dependencies) in the pom.xml file of your webapp.
 
 ### 2. `web.xml` file ###
 
@@ -186,7 +186,7 @@ Some discussions on the monitoring [overhead in production](Overhead.md) were ar
 
 > If the starting of the server does not work and if you have an error in the output of the server complaining about a "window server" (in particular if you use Mac OS X server), add the system property "-Djava.awt.headless=true" (in the java launch command or in the administration user interface of the server; or if you use tomcat, you can add "java.awt.headless=true" in the file $CATALINA\_HOME/conf/catalina.properties). And restart the server.
 
-> Then you can complete the settings as below according to your needs. And before using it in production, you probably want to secure the monitoring page using your own means or see the [security](#16._Security.md) chapter.
+> Then you can complete the settings as below according to your needs. And before using it in production, you probably want to secure the monitoring page using your own means or see the [security](#16-security) chapter.
 
 ### 4. PDF report generation ###
 
@@ -906,7 +906,7 @@ or
 	</tomcat-users>
 ```
 
-> Or, if you want BASIC authentication with username and password, but do no want to use a realm and "security-constraint" in web.xml, you can add the parameter "authorized-users" in web.xml, in context or in system properties like the other [javamelody parameters](#6._Optional_parameters.md) (since v1.53). For example in your WEB-INF/web.xml file:
+> Or, if you want BASIC authentication with username and password, but do no want to use a realm and "security-constraint" in web.xml, you can add the parameter "authorized-users" in web.xml, in context or in system properties like the other [javamelody parameters](#6-optional-parameters) (since v1.53). For example in your WEB-INF/web.xml file:
 
 ```
 	<filter>
