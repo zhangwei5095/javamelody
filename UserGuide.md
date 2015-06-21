@@ -75,7 +75,7 @@ Browser: The html report of JavaMelody is best viewed with
 [Chrome](http://www.google.com/chrome)
 or MSIE9 (MSIE7 not recommended).
 
-[Online help](http://javamelody.googlecode.com/svn/trunk/javamelody-core/src/site/resources/Online_help_of_the_monitoring.pdf)
+[Online help](../master/javamelody-core/src/site/resources/Online_help_of_the_monitoring.pdf)
 
 [Roots conference slides by David Karlsen](http://www.slideshare.net/djkarlsen/significance-of-metrics)
 
