@@ -4,34 +4,34 @@ For standard documentation, see [UserGuide](UserGuide.md)
 
 ## Table of contents ##
 
-  * [Setup JavaMelody in an ear file](#Setup_in_an_ear_file.md)
-    * [1. Jar files](#1._Jar_files.md)
-    * [2. web.xml file](#2._web.xml_file.md)
-    * [3. First results](#3._First_results.md)
-    * [4 to 17. Other settings (optional parameters, JDBC, EJB3, etc)](#4_to_17._Other_settings_(optional_parameters,_JDBC,_EJB3,_etc).md)
-  * [Optional centralization server setup](#Optional_centralization_server_setup.md)
-    * [1. War file of the webapp of monitoring](#1._War_file_of_the_webapp_of_monitoring.md)
-    * [2. Deployment of the webapp of monitoring](#2._Deployment_of_the_webapp_of_monitoring.md)
-    * [3. Simpler alternative of deployment of the webapp of monitoring](#3._Simpler_alternative_of_deployment_of_the_webapp_of_monitoring.md)
-    * [4. Results with a collect server](#4._Results_with_a_collect_server.md)
-    * [5. Security with a collect server](#5._Security_with_a_collect_server.md)
-    * [6. If reverse proxy](#6._If_reverse_proxy.md)
-  * [Business facades (without EJB3 and without Spring and without Guice)](#Business_facades_(without_EJB3_and_without_Spring_and_without_Gu.md)
-  * [Enable Hotspots detection](#Enable_Hotspots_detection.md)
-  * [JPA monitoring](#JPA_monitoring.md)
-  * [Alternative for monitoring of sql requests](#Alternative_for_monitoring_of_sql_requests.md)
-  * [Monitoring of sql requests and of jdbc connections in GlassFish v3+](#Monitoring_of_sql_requests_and_of_jdbc_connections_in_v3+.md)
-  * [Usage of JavaMelody in JonAS 5 (which uses OSGI)](#Usage_of_in_JonAS_5_(which_uses_OSGI).md)
-  * [Deployment on Tomcat without modification of monitored webapps (beta)](#Deployment_on_Tomcat_without_modification_of_monitored_webapps_(.md)
-  * [Embedding JavaMelody in a standalone app](#Embedding_in_a_standalone_app.md)
-  * [Debugging logs](#Debugging_logs.md)
-  * [Clearing all statistics and all graphs](#Clearing_all_statistics_and_all_graphs.md)
-  * [Custom reports](#Custom_reports.md)
-  * [Customizing styles, icons and other resources in the html reports](#Customizing_styles,_icons_and_other_resources_in_the_html_report.md)
-  * [Using a servlet to display the monitoring reports](#Using_a_servlet_to_display_the_monitoring_reports.md)
-  * [Report written before last shutdown](#Report_written_before_last_shutdown.md)
-  * [Format of RRD files](#Format_of_RRD_files.md)
-  * [Compilation and development](#Compilation_and_development.md)
+  * [Setup JavaMelody in an ear file](#setup-in-an-ear-file)
+    * [1. Jar files](#1-jar-files)
+    * [2. web.xml file](#2-webxml-file)
+    * [3. First results](#3-first-results)
+    * [4 to 17. Other settings (optional parameters, JDBC, EJB3, etc)](#4-to-17-other-settings-optional-parameters-jdbc-ejb3-etc)
+  * [Optional centralization server setup](#optional-centralization-server-setup)
+    * [1. War file of the webapp of monitoring](#1-war-file-of-the-webapp-of-monitoring)
+    * [2. Deployment of the webapp of monitoring](#2-deployment-of-the-webapp-of-monitoring)
+    * [3. Simpler alternative of deployment of the webapp of monitoring](#3-simpler-alternative-of-deployment-of-the-webapp-of-monitoring)
+    * [4. Results with a collect server](#4-results-with-a-collect-server)
+    * [5. Security with a collect server](#5-security-with-a-collect-server)
+    * [6. If reverse proxy](#6-if-reverse-proxy)
+  * [Business facades (without EJB3 and without Spring and without Guice)](#business-facades-without-ejb3-and-without-spring-and-without-guice)
+  * [Enable Hotspots detection](#enable-hotspots-detection)
+  * [JPA monitoring](#jpa-monitoring)
+  * [Alternative for monitoring of sql requests](#alternative-for-monitoring-of-sql-requests)
+  * [Monitoring of sql requests and of jdbc connections in GlassFish v3+](#monitoring-of-sql-requests-and-of-jdbc-connections-in-v3+)
+  * [Usage of JavaMelody in JonAS 5 (which uses OSGI)](#usage-of-in-jonas-5-which-uses-osgi)
+  * [Deployment on Tomcat without modification of monitored webapps (beta)](#deployment-on-tomcat-without-modification-of-monitored-webapps-beta)
+  * [Embedding JavaMelody in a standalone app](#embedding-in-a-standalone-app)
+  * [Debugging logs](#debugging-logs)
+  * [Clearing all statistics and all graphs](#clearing-all-statistics-and-all-graphs)
+  * [Custom reports](#custom-reports)
+  * [Customizing styles, icons and other resources in the html reports](#customizing-styles-icons-and-other-resources-in-the-html-report)
+  * [Using a servlet to display the monitoring reports](#using-a-servlet-to-display-the-monitoring-reports)
+  * [Report written before last shutdown](#report-written-before-last-shutdown)
+  * [Format of RRD files](#format-of-rrd-files)
+  * [Compilation and development](#compilation-and-development)
 
 
 ## Setup JavaMelody in an ear file ##
@@ -138,7 +138,7 @@ For standard documentation, see [UserGuide](UserGuide.md)
 
 > They have the same effects on the collect server than those of a monitored application as written in the [UserGuide](UserGuide.md). In particular the parameter `resolution-seconds` defines the period of calls to urls of applications from collect server and the resolution of charts in the monitoring. Logs such as connect exceptions are printed in the standard output of the server, and to have more logs you can add the system property `-Djavamelody.log=true`
 
-> The collect server can send weekly, daily or monthly reports by mail for each monitored application. For this, use in the collect server (in Tomcat context for example) exactly the same mail session, the same parameters and the same jar files as those in [Weekly, daily or monthly reports by mail](UserGuide#14._Weekly,_daily_or_monthly_reports_by_mail.md).
+> The collect server can send weekly, daily or monthly reports by mail for each monitored application. For this, use in the collect server (in Tomcat context for example) exactly the same mail session, the same parameters and the same jar files as those in [Weekly, daily or monthly reports by mail](UserGuide.md#14-weekly-daily-or-monthly-reports-by-mail).
 
 > If xml format is desired instead of java serialization as transport format between a collect server and monitored applications, a parameter `transport-format` which is specific to the collect server can be added with 'xml' for value. The java serialization is the transport format by default and it is recommended for best performances (75% more performance for response time, according to this [benchmark](http://code.google.com/p/thrift-protobuf-compare/wiki/Benchmarking?ts=1237772203&updated=Benchmarking)). The xml transport format needs a dependency on libraries xstream (BSD) and xpp3 (Public Domain) in the monitored webapps.
 
@@ -249,7 +249,7 @@ For standard documentation, see [UserGuide](UserGuide.md)
         </tomcat-users>
 ```
 
-> Or, if you want BASIC authentication with username and password, but do no want to use a realm and "security-constraint" in web.xml, you can add the parameter "authorized-users" in web.xml, in context or in system properties like the other [javamelody parameters](UserGuide#6._Optional_parameters.md). For example with a system property -Djavamelody.authorized-users=user1:pwd1,user2:pwd2 (_since v1.53_)
+> Or, if you want BASIC authentication with username and password, but do no want to use a realm and "security-constraint" in web.xml, you can add the parameter "authorized-users" in web.xml, in context or in system properties like the other [javamelody parameters](UserGuide.md#6-optional-parameters). For example with a system property -Djavamelody.authorized-users=user1:pwd1,user2:pwd2 (_since v1.53_)
 
 > Then, when you add the monitored application in the collector server, define the username and the password in the URL. For example, the URL of the monitored application, as given to the collect server, could be:
 > http://myusername:mypassword@myhost:8080/mywebapp
@@ -318,7 +318,7 @@ When enabled, the Hotspots screen displays CPU hotspots in executed methods for 
 
 The overhead of hotspots detection is low: it is based on sampling of stack-traces of threads, without instrumentation. And it is made to be always active if enabled. (It is currently not enabled by default. It may be enabled by default in the future.)
 
-Three parameters can be defined in web.xml, in context or in system properties like the other [parameters](UserGuide#6._Optional_parameters.md):
+Three parameters can be defined in web.xml, in context or in system properties like the other [parameters](UserGuide.md#6-optional-parameters):
 
   * "sampling-seconds" to enable the hotspots sampling and to define its period. A period of 10 seconds can be recommended to have the lowest overhead, but then a few hours may be needed to have significant results for a webapp under real use. If you don't mind having a bit more overhead or want a result faster in test, you can use a value of 1 or 0.1 in second for this parameter.
   * "sampling-excluded-packages" to change the list of the excluded packages ("java,sun,com.sun,javax,org.apache,org.hibernate,oracle,org.postgresql,org.eclipse" by default)
@@ -624,7 +624,7 @@ Then add a system property in your launch file: -Djonas.felix.configuration.file
 
 You can include links to your custom reports in the floating menu on the right of the report (_since v1.50_).
 
-For that, add a parameter named "custom-reports" like the other [javamelody parameters](UserGuide#6._Optional_parameters.md). In the value of this parameter, put the list of names of your custom reports separated with commas. Then for each custom report, add a parameter with the same name and its path as value.
+For that, add a parameter named "custom-reports" like the other [javamelody parameters](UserGuide.md#6-optional-parameters). In the value of this parameter, put the list of names of your custom reports separated with commas. Then for each custom report, add a parameter with the same name and its path as value.
 
 For example:
 ```
@@ -678,7 +678,7 @@ This [example can be seen in the demo](http://demo.javamelody.cloudbees.net/moni
 
 ## Using a servlet to display the monitoring reports ##
 
-> The MonitoringFilter documented in the [user guide](UserGuide#2._web.xml_file.md) is enough to display reports for the "/monitoring" url. You can also change that url with the [monitoring-path parameter](UserGuide#6._Optional_parameters.md).
+> The MonitoringFilter documented in the [user guide](UserGuide.md#2-webxml-file) is enough to display reports for the "/monitoring" url. You can also change that url with the [monitoring-path parameter](UserGuide.md#6-optional-parameters).
 
 > If for some reason, you want to use a servlet to display the reports, then such a servlet already exists and you can use it by adding the following in the WEB-INF/web.xml file of your webapp:
 
