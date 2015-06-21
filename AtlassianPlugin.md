@@ -61,7 +61,7 @@
 ```
 
 > In JIRA, Confluence and Bamboo, you can also send **weekly, daily or monthly reports** in pdf format by mail to one or several people.
-> This is explained in the chapter [Weekly, daily or monthly reports by mail](UserGuide#14._Weekly,_daily_or_monthly_reports_by_mail.md).
+> This is explained in the chapter [Weekly, daily or monthly reports by mail](UserGuide.md#14-weekly-daily-or-monthly-reports-by-mail).
 
 > For example, for JIRA:
 
@@ -85,4 +85,4 @@
 	...
 ```
 
-> Read [Weekly, daily or monthly reports by mail](UserGuide#14._Weekly,_daily_or_monthly_reports_by_mail.md) for more parameters if needed.
+> Read [Weekly, daily or monthly reports by mail](UserGuide.md#14-weekly-daily-or-monthly-reports-by-mail) for more parameters if needed.
