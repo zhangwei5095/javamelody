@@ -930,7 +930,7 @@ or
 > In order for JavaMelody to work, you can disable the SecurityManager (if Tomcat, remove the option
 > [-security](http://tomcat.apache.org/tomcat-8.0-doc/security-manager-howto.html) from start)
 > or if you want to keep it, you can modify the
-> [java.policy](http://java.sun.com/javase/8/docs/technotes/guides/security/PolicyFiles.html#Examples)
+> [java.policy](http://java.sun.com/javase/7/docs/technotes/guides/security/PolicyFiles.html#Examples)
 > file of your server.
 
 > For example with Tomcat, the java.policy file is $CATALINA\_HOME/conf/catalina.policy
