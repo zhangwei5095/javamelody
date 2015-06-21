@@ -226,7 +226,7 @@ Some discussions on the monitoring [overhead in production](Overhead.md) were ar
 
 > Note that the `url-pattern`s must "contain" the url `/monitoring` in order to have reports.
 
-> As an alternative, you can use a single `/*` `url-pattern` and a filter parameter with a [regular expression](http://java.sun.com/javase/6/docs/api/java/util/regex/Pattern.html) can be added before ` </filter> ` in order to exclude some urls, for example:
+> As an alternative, you can use a single `/*` `url-pattern` and a filter parameter with a [regular expression](http://java.sun.com/javase/8/docs/api/java/util/regex/Pattern.html) can be added before ` </filter> ` in order to exclude some urls, for example:
 
 ```
 	<filter>
@@ -300,16 +300,16 @@ Some discussions on the monitoring [overhead in production](Overhead.md) were ar
 > These actions have confirmations when necessary.
 
 > The parameter `url-exclude-pattern` is a
-> [regular expression](http://java.sun.com/javase/6/docs/api/java/util/regex/Pattern.html)
+> [regular expression](http://java.sun.com/javase/8/docs/api/java/util/regex/Pattern.html)
 > to exclude some urls from monitoring as written above.
 
 > The parameter `http-transform-pattern` is a
-> [regular expression](http://java.sun.com/javase/6/docs/api/java/util/regex/Pattern.html)
+> [regular expression](http://java.sun.com/javase/8/docs/api/java/util/regex/Pattern.html)
 > to transform descriptions of http requests and to delete dynamic parts (identifiers of objects for example)
 > in order to be able to aggregate on these requests
 
 > Similarly, the parameter `sql-transform-pattern` is a
-> [regular expression](http://java.sun.com/javase/6/docs/api/java/util/regex/Pattern.html)
+> [regular expression](http://java.sun.com/javase/8/docs/api/java/util/regex/Pattern.html)
 > to transform descriptions of sql requests (not binded identifiers for a "in" clause for example)
 > in order to be able to aggregate on these requests.
 
@@ -928,9 +928,9 @@ or
 
 > It is because JavaMelody needs access to a lot of system data and it needs to write its files.
 > In order for JavaMelody to work, you can disable the SecurityManager (if Tomcat, remove the option
-> [-security](http://tomcat.apache.org/tomcat-6.0-doc/security-manager-howto.html) from start)
+> [-security](http://tomcat.apache.org/tomcat-8.0-doc/security-manager-howto.html) from start)
 > or if you want to keep it, you can modify the
-> [java.policy](http://java.sun.com/javase/6/docs/technotes/guides/security/PolicyFiles.html#Examples)
+> [java.policy](http://java.sun.com/javase/8/docs/technotes/guides/security/PolicyFiles.html#Examples)
 > file of your server.
 
 > For example with Tomcat, the java.policy file is $CATALINA\_HOME/conf/catalina.policy
