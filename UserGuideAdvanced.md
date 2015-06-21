@@ -466,11 +466,11 @@ Then add a system property in your launch file: -Djonas.felix.configuration.file
 
 > In general, JavaMelody is installed in a webapp with a server such as Tomcat. But if you want to monitor a standalone application (non webapp and no server), you can embed JavaMelody with a Jetty Server in your application. For that:
 
-  * add Jetty, and JavaMelody with JRobin dependencies in you application. If you use Maven, you can copy dependencies from this [pom.xml](https://code.google.com/p/javamelody/source/browse/trunk/javamelody-for-standalone/pom.xml).
+  * add Jetty, and JavaMelody with JRobin dependencies in you application. If you use Maven, you can copy dependencies from this [pom.xml](../master/javamelody-for-standalone/pom.xml).
 
-  * Then, copy this example of [EmbeddedServer](https://code.google.com/p/javamelody/source/browse/trunk/javamelody-for-standalone/src/main/java/net/bull/javamelody/EmbeddedServer.java) class in your application.
+  * Then, copy this example of [EmbeddedServer](../master/javamelody-for-standalone/src/main/java/net/bull/javamelody/EmbeddedServer.java) class in your application.
 
-  * And you can start the server [like this](https://code.google.com/p/javamelody/source/browse/trunk/javamelody-for-standalone/src/main/java/example/Main.java). For example, add the following in the main class of your application:
+  * And you can start the server [like this](../master/javamelody-for-standalone/src/main/java/example/Main.java). For example, add the following in the main class of your application:
 
 ```
                 final Map<Parameter, String> parameters = new HashMap<>();
@@ -641,8 +641,7 @@ For example:
 ```
 
 If the path starts with '/', it will be considered as a JSP (or a servlet) inside the webapp. Otherwise it will be considered as an URL (http://example.com).
-As example of JSP, you can add the file "/WEB-INF/pages/myCustomReport.jsp" in your webapp, with a content like [this one](https://code.google.com/p/javamelody/source/browse/trunk/javamelody-core/src/test/test-webapp/WEB-INF/pages/myCustomReport.jsp).
-This [example can be seen in the demo](http://demo.javamelody.cloudbees.net/monitoring?report=My+custom+report).
+As example of JSP, you can add the file "/WEB-INF/pages/myCustomReport.jsp" in your webapp, with a content like [this one](../master/javamelody-core/src/test/test-webapp/WEB-INF/pages/myCustomReport.jsp).
 
 ## Customizing styles, icons and other resources in the html reports ##
 
@@ -670,9 +669,9 @@ This [example can be seen in the demo](http://demo.javamelody.cloudbees.net/moni
 ```
 
 > Then add files "customMonitoring.css" and "static/bullets/red.png" at the root of the web content in your webapp.
-> You can replace every web resource in this directory and its sub-directories: "[src/main/resources/net/bull/javamelody/resource](https://code.google.com/p/javamelody/source/browse/#svn%2Ftrunk%2Fjavamelody-core%2Fsrc%2Fmain%2Fresources%2Fnet%2Fbull%2Fjavamelody%2Fresource)".
+> You can replace every web resource in this directory and its sub-directories: "[src/main/resources/net/bull/javamelody/resource](../../tree/master/javamelody-core/src/main/resources/net/bull/javamelody/resource)".
 
-> This configuration is for a monitored webapp. For the optional collector server, see [issue 414](https://code.google.com/p/javamelody/issues/detail?id=414) instead.
+> This configuration is for a monitored webapp. For the optional collector server, see [issue 414](../../issues/414) instead.
 
 ## Using a servlet to display the monitoring reports ##
 
