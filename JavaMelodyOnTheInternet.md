@@ -10,7 +10,7 @@
   * **Référence**: http://references.modernisation.gouv.fr/socle-logiciels-libres & page 3: http://references.modernisation.gouv.fr/sites/default/files/SILL-2014-socle-interminist%C3%A9riel-logiciels-libres.pdf
 
 **Grepcode**
-> You can also browse the sources at [grepcode](http://grepcode.com/file/repo1.maven.org/maven2/net.bull.javamelody/javamelody-core/1.54.0/net/bull/javamelody/MonitoringFilter.java) with point and click, except that grepcode does not display the latest version in general.
+> You can also browse the sources at [grepcode](http://grepcode.com/file/repo1.maven.org/maven2/net.bull.javamelody/javamelody-core/1.55.0/net/bull/javamelody/MonitoringFilter.java) with point and click, except that grepcode does not display the latest version in general.
 
 **A selection of blogs**:
   * [Slides](http://www.slideshare.net/djkarlsen/significance-of-metrics) and [video](http://vimeo.com/channels/rootsconf#24706626) of David Karlsen at the Roots Conference
@@ -55,8 +55,6 @@ JavaMelody search in blogs on the Internet:
 <br />
 JavaMelody search in mailing lists on the Internet (or [refine search in MarkMail](http://markmail.org/search/?q=javamelody)):
 &lt;wiki:gadget url="http://markmail.org/gadgets/markmailmini.xqy?q=javamelody&r=270" width="100%" height="310px" border="0"/&gt;
-
-[Release notes](ReleaseNotes.md), [Screenshots](Screenshots.md), [User guide](UserGuide.md)
 
 [JavaMelody users' group](http://groups.google.com/group/javamelody)
 
