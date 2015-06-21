@@ -258,8 +258,6 @@ For standard documentation, see [UserGuide](UserGuide.md)
 
 > Furthermore, if you do not want the people having access to the collect server to be able to add or remove applications to monitor, you can forbid the writing to the file "applications.properties" which contains the list of the applications to monitor. This file is located in the storage directory, "temp/javamelody/applications.properties" for example. The user of the OS running the java process of the collect server must be allowed to read the file but without being allowed to write it. Only you, by using "root" for example, will be able by editing the file to add or to remove applications as the collect server would do. And in this case, the links "add an application" and "remove an application" will not be displayed in the collect server.
 
-> See also the comment by Chris at the bottom of this page.
-
 
 ### 6. If reverse proxy ###
 
