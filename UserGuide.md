@@ -8,7 +8,7 @@
   * [Liferay Plugin](#liferay-plugin)
   * [Sonar Plugin](#sonar-plugin)
   * [Grails Plugin](#grails-plugin)
-  * [JavaMelody Setup](#setup)
+  * [JavaMelody Setup](#javamelody-setup)
     * [1. Jar files](#1-jar-files)
     * [2. web.xml file](#2-web.xml-file)
     * [3. First results](#3-first-results)
