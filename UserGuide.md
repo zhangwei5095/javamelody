@@ -570,7 +570,7 @@ or
 ```
 
   * Alternative to step 3: Use of any pointcut provided by Spring or writing of your own pointcut.
-> You can use any [pointcut](http://static.springsource.org/spring/docs/2.5.x/api/index.html)
+> You can use any [pointcut](http://docs.spring.io/spring/docs/2.5.x/api/index.html)
 > provided by Spring or you can write your own.
 > For example, you can create a class `com.xyz.someapp.service.MonitoringPointcut`
 > which implements org.springframework.aop.Pointcut and add the following lines in your applicationContext.xml file:
@@ -583,7 +583,7 @@ or
 	</bean>
 ```
 
-> Note : The [documentation](http://static.springsource.org/spring/docs/2.5.6/reference/aop.html#aop-proxying) and [blog](http://blog.springsource.com/2007/07/19/debunking-myths-proxies-impact-performance/)
+> Note : The [documentation](http://docs.spring.io/spring/docs/2.5.6/reference/aop.html#aop-proxying) and [blog](http://spring.io/blog/2007/07/19/debunking-myths-proxies-impact-performance/)
 > of Spring AOP advises to use JDK dynamic proxies and not CGLIB, which should pose no problem for facades with separate interfaces and implementations.
 
   * Alternative in order to use AspectJ, in case that proxies don't work (thanks to [Witek Wolejszo](http://touk.pl/blog/2011/03/07/javamelody-spring-and-aspectj/))
@@ -728,7 +728,7 @@ or
 > Batch jobs are automatically monitored when they are scheduled with [Quartz](http://www.quartz-scheduler.org/).
 
 > But if these jobs are scheduled in Quartz using
-> [Spring scheduling](http://static.springsource.org/spring/docs/2.5.x/reference/scheduling.html),
+> [Spring scheduling](http://docs.spring.io/spring/docs/2.5.x/reference/scheduling.html),
 > you need to add the javamelody parameter "quartz-default-listener-disabled" with the value "true"
 > and you need to add the property "exposeSchedulerInRepository" with the value "true" for the bean
 > "SchedulerFactoryBean" in your applicationContext.xml file.
