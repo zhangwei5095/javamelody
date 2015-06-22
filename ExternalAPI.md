@@ -107,7 +107,7 @@ This format is recommended only for the communication between a collect server a
 
 ### API when using a collect server ###
 
-Most of the API above works when using a [centralized collect server](UserGuideAdvanced#Optional_centralization_server_setup.md), including lastValue, jmxValue, XML and JSON.
+Most of the API above works when using a [centralized collect server](UserGuideAdvanced.md#optional-centralization-server-setup), including lastValue, jmxValue, XML and JSON.
 
 You just need to add an "application" parameter with the name of the app, like "&application=myapp" in all the URLs above.
 
