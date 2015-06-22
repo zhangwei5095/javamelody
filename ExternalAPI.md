@@ -2,14 +2,14 @@ This page documents the external API of JavaMelody, including how to get the mon
 
 ## Table of contents ##
 
-  * [HTML](#HTML.md)
-  * [PDF](#PDF.md)
-  * [PNG and lastValue](#PNG_and_lastValue.md)
-  * [jmxValue](#jmxValue.md)
-  * [XML](#XML.md)
-  * [JSON](#JSON.md)
-  * [Serialized](#Serialized.md)
-  * [API when using a collect server](#API_when_using_a_collect_server.md)
+  * [HTML](#html)
+  * [PDF](#pdf)
+  * [PNG and lastValue](#png-and-lastvalue)
+  * [jmxValue](#jmxvalue)
+  * [XML](#xml)
+  * [JSON](#json)
+  * [Serialized](#serialized)
+  * [API when using a collect server](#api-when-using-a-collect-server)
 
 ### HTML ###
 
@@ -25,12 +25,12 @@ Other pages are available as you can see in those monitoring pages.
 
 For example: http://localhost:8080/mywebapp/monitoring?part=counterSummaryPerClass&counter=guice&period=jour
 
-The "part" parameter can be "threads", "currentRequests", "counterSummaryPerClass" and if system actions are [enabled](UserGuide#6._Optional_parameters.md) (true by default), it can be "heaphisto", "sessions", "web.xml", "mbeans", "processes", "jndi", "connections" or "database".
+The "part" parameter can be "threads", "currentRequests", "counterSummaryPerClass" and if system actions are [enabled](UserGuide.md#6-optional-parameters) (true by default), it can be "heaphisto", "sessions", "web.xml", "mbeans", "processes", "jndi", "connections" or "database".
 
 
 ### PDF ###
 
-The monitoring data is also available in the PDF format if the [iText dependency](UserGuide#Dependencies.md) is available in the webapp.
+The monitoring data is also available in the PDF format if the [iText dependency](UserGuide.md#dependencies) is available in the webapp.
 
 For example, for the day period you can use the URL: http://localhost:8080/mywebapp/monitoring?format=pdf&period=jour
 
@@ -68,18 +68,17 @@ Note: There is also a [Nagios plugin](https://github.com/sbower/nagios_javamelod
 
 For each MBean (JMX) attribute, a link on the left of the attribute in the MBeans page is provided to have only the current value of an attribute in plain text. For example, the following URL retrieves the bytes sent and the process cpu time for a Tomcat server: http://localhost:8080/mywebapp/monitoring?jmxValue=Catalina:type=GlobalRequestProcessor,name=http-8080.bytesSent|java.lang:type=OperatingSystem.ProcessCpuTime
 
-To use the URL for a MBean value, the system actions must be [enabled](UserGuide#6._Optional_parameters.md) (true by default).
+To use the URL for a MBean value, the system actions must be [enabled](UserGuide.md#6-optional-parameters) (true by default).
 
 
 ### XML ###
 
-The monitoring data is available as XML over http if the [XStream and XPP3 dependencies](UserGuide#Dependencies.md) are available in the webapp. (XPP3 is a transitive dependency of XStream so you just need to add the XStream dependency if you have a Maven project).
+The monitoring data is available as XML over http if the [XStream and XPP3 dependencies](UserGuide.md#dependencies) are available in the webapp. (XPP3 is a transitive dependency of XStream so you just need to add the XStream dependency if you have a Maven project).
 
 **Warning**: The XML and JSON formats are dependent on the internal structure of data in JavaMelody. By using this XML/JSON format, you are coupled on this specific internal structure, which may change anytime without notice. (But of course, you may be more loosely coupled than by using the JavaMelody classes directly.) So use the XML/JSON API after acknowledging the risks of coupling.
 
 The following URL retrieves data in XML format as a list of counters, with statistics of requests, and also some current system information:
 http://localhost:8080/mywebapp/monitoring?format=xml&period=jour
-You can also try with the public demo: http://demo.javamelody.cloudbees.net/monitoring?format=xml&period=jour
 
 Like for the HMTL format, you can replace the "period" parameter with "semaine", "mois", "annee" and "tout" for the week, month, year and all periods. Or you can use a custom period.
 
@@ -88,14 +87,14 @@ Other data is available and the URLs are the same as for the HTML pages except t
 For example, some aggregated statistics in a counter are available with the following URL:
 http://localhost:8080/mywebapp/monitoring?format=xml&part=counterSummaryPerClass&counter=guice&period=jour
 
-The "part" parameter in the URL can be replaced with "threads", "counterSummaryPerClass" and if system actions are [enabled](UserGuide#6._Optional_parameters.md) (true by default), it can be replaced with "heaphisto", "sessions", "mbeans", "jndi", "processes", "connections" or "database". ("counterSummaryPerClass" needs a "counter" parameter, "sessions" may need a "sessionId" parameter to have session details, "database" may need a "request" parameter to select a predefined database report and "jndi" may need a "path" parameter to select a jndi context path).
+The "part" parameter in the URL can be replaced with "threads", "counterSummaryPerClass" and if system actions are [enabled](UserGuide.md#6-optional-parameters) (true by default), it can be replaced with "heaphisto", "sessions", "mbeans", "jndi", "processes", "connections" or "database". ("counterSummaryPerClass" needs a "counter" parameter, "sessions" may need a "sessionId" parameter to have session details, "database" may need a "request" parameter to select a predefined database report and "jndi" may need a "path" parameter to select a jndi context path).
 
 The response data is automatically compressed in gzip by JavaMelody, if the response size is more than 50 KB and if the client supports it (if the "Accept-Encoding" header contains "gzip" such as for browsers).
 
 
 ### JSON ###
 
-The monitoring data is also available as JSON over http if the [XStream dependency](UserGuide#Dependencies.md) is available in the webapp. (the XPP3 transitive dependency is not needed for JSON).
+The monitoring data is also available as JSON over http if the [XStream dependency](UserGuide.md#dependencies) is available in the webapp. (the XPP3 transitive dependency is not needed for JSON).
 
 The JSON API works the same as the XML API: just use "json" as "format" parameter instead of "xml" in the URLs given above.
 
