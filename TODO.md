@@ -12,7 +12,7 @@ Follow JRobin issues:
   * ~~and http://sourceforge.net/mailarchive/message.php?msg_id=28038427 (one issue submitted in JIRA: http://issues.opennms.org/browse/JRB-26)~~ (done in 1.46, [issue 96](https://code.google.com/p/javamelody/issues/detail?id=96))
 
 And
-  1. Fix [issues](http://code.google.com/p/javamelody/issues/list)
+  1. Fix [issues](../../issues)
   1. More unit tests
   1. More integration tests (all JDK/JRE and versions, all OS, all application servers and versions, all navigators)
   1. **Translations** (Italian, Spanish...)
@@ -34,7 +34,7 @@ And
   1. Test the monitoring of sql requests with a datasource from jndi in **Resin**
   1. ~~Test the jndi report in **Websphere**~~ (done)
   1. Option in the UI to change from cumulative times (http times include sql) to **non-cumulative times**, via a link and a persistent http cookie or at least a parameter (from user group)
-  1. ~~Downloadable **demo** of JavaMelody in [java pet store](http://java.sun.com/developer/releases/petstore/) with step by step instruction to install in glassfish or [Spring pet clinic](http://static.springsource.org/docs/petclinic.html) in tomcat for example~~ (done, there is an [online demo](Demo.md).)
+  1. **demo** of JavaMelody in [java pet store](http://java.sun.com/developer/releases/petstore/) with step by step instruction to install in glassfish or [Spring pet clinic](http://static.springsource.org/docs/petclinic.html) in tomcat for example (~~done~~, there is no more [online demo](Demo.md).)
   1. Basic server monitoring: in [downloads](https://github.com/javamelody/javamelody/releases), provide a simple war file to monitor only an application server (cpu, memory, system informations, mbeans, threads) without monitoring any application (http requests, http sessions, etc)
   1. Cloud Watch metrics for an application in Amazon EC2, possibly by using Beans Talk.
   1. ~~Statistics of JSF actions like for Struts actions~~ (done)
@@ -49,9 +49,9 @@ And
   1. Display of graphs with **percentages of navigators, of OS, of countries/languages** based on user-agent and main locale, with jrobin and percentage one above the others up to 100%, and idem with types of requests (get,post,ajax,gwt or perhaps select/update/insert/delete)
   1. **Alerts** based on thresholds, with mails to administrators
   1. ~~**CSV** exports of tables~~ (done in the rich desktop UI. Note that there are also [XML and JSON](ExternalAPI.md) exports possible in the web UI)
-  1. ~~Rich **desktop UI**, with [swing](http://java.sun.com/docs/books/tutorial/uiswing/) and [java web start](http://java.sun.com/javase/technologies/desktop/javawebstart/index.jsp)~~ (done, [ReleaseNotes#1.42.0](ReleaseNotes#1.42.0.md))
+  1. ~~Rich **desktop UI**, with [swing](http://java.sun.com/docs/books/tutorial/uiswing/) and [java web start](http://java.sun.com/javase/technologies/desktop/javawebstart/index.jsp)~~ (done, [ReleaseNotes#1.42.0](ReleaseNotes.md#1.42.0))
   1. **[Munin](http://munin.projects.linpro.no/)/[Nagios](http://www.nagios.org/)/[Zabbix](http://www.zabbix.com)** plugin to display some graphs in those tools
-  1. ~~Add the Nagios plugin by Shawn Bower in the user guide in addition to the [External API](ExternalAPI#PNG_and_lastValue.md), if it works well.~~ (done)
+  1. ~~Add the Nagios plugin by Shawn Bower in the user guide in addition to the [External API](ExternalAPI.md#png-and-lastvalue), if it works well.~~ (done)
   1. When monitoring-spring.xml is used (or monitoring-spring-aspectj.xml), add a page to display beans in the Spring context by adding a bean which implements ApplicationContextAware
   1. Add a plugin interceptor to monitor sql requests in mybatis when no other sql monitoring, such as a datasource from JNDI, is used
   1. Play framework, see [stackoverflow](http://stackoverflow.com/questions/7409112/javamelody-and-play-framework)
@@ -65,7 +65,7 @@ And
   1. Check with a file if 2 instances use the same storage directory (and warn about data corruption)
   1. ~~Add a pdf report for the JNDI bindings~~ (done in [revision 3101](https://code.google.com/p/javamelody/source/detail?r=3101))
   1. ~~Add a Table Of Contents with links at the top of the main report. In order to not take much vertical space, it can be displayed hovering, or in a combo box, or in a popup...~~ (done in 1.50, [revision 3705](https://code.google.com/p/javamelody/source/detail?r=3705))
-  1. ~~Create a plugin for Liferay v6.1 or later~~ (done, [doc](UserGuide#Liferay_Plugin.md))
+  1. ~~Create a plugin for Liferay v6.1 or later~~ (done, [doc](UserGuide.md#liferay-plugin))
   1. **Customized reports for each version of the monitored application, to ease the comparison of statistics between versions:** There could be an optional javamelody parameter giving the current application version. When the developer changes the parameter's value, a properties file could be stored with the list of the application's versions including start and end dates. And so javamelody would be able to display the list of the application's versions with links to display the reports with customized periods. Otherwise, that list and the links to customized reports can be manually maintained in a wiki for example, after each deployment of the application. New 'comparison' reports may also be displayed to show comparison statistics/details between two, or across all, application versions.  Potentially this could initially be limited to a selected statistic marker, and/or only as an aggregated general report (for usecase of showing an aggregated report of 'version 5 is 10% faster than version 4'). This can be extended to compare the statistics in the details of requests, with drill-downs.
   1. **Display graphics of GC in some specific screen(s) when GC logs are enabled**. In the meantime, [HPJMeter](http://www.hp.com/go/hpjmeter) can be used.
   1. ~~In the [Jenkins Monitoring plugin](https://wiki.jenkins-ci.org/display/JENKINS/Monitoring), if Jenkins v1.502+, add a [BuildStepListener](http://javadoc.jenkins-ci.org/hudson/model/BuildStepListener.html) as an extension point, to display build steps with mean execution and cpu times, in the details page of the statistics of a build. The name of the build steps should include the name of the job + " / " + Describable.getDescriptor().getDisplayName() or class.getSimpleName() + if that's the case, ant targets, maven goals or shell command.~~ (done, except specifics of build steps: ant targets, maven goals, shell command).
