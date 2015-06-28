@@ -53,15 +53,14 @@ JavaMelody search in blogs on the Internet:
 <wiki:gadget url="http://google-code-feed-gadget.googlecode.com/svn/trunk/gadget.xml" up\_feeds="http://blogsearch.google.com/blogsearch\_feeds?q=javamelody&prmdo=1&output=rss" width="100%" height="260px" border="0"/>
 
 <br />
-JavaMelody search in mailing lists on the Internet (or [refine search in MarkMail](http://markmail.org/search/?q=javamelody)):
-&lt;wiki:gadget url="http://markmail.org/gadgets/markmailmini.xqy?q=javamelody&r=270" width="100%" height="310px" border="0"/&gt;
+JavaMelody search in [mailing lists on the Internet](http://markmail.org/search/?q=javamelody) (Markmail).
 
 [JavaMelody users' group](http://groups.google.com/group/javamelody)
 
-[Jenkins / Hudson plugin](http://wiki.jenkins-ci.org/display/HUDSON/Monitoring)
+[Jenkins plugin](http://wiki.jenkins-ci.org/display/JENKINS/Monitoring)
 
 [JIRA/Confluence/Bamboo plugin](https://plugins.atlassian.com/plugins/net.bull.javamelody)
 
 [Grails plugin](http://www.grails.org/plugin/grails-melody)
 
-[ohloh statistics](https://www.ohloh.net/p/javamelody) &lt;wiki:gadget url="http://www.ohloh.net/p/444931/widgets/project\_users.xml?style=blue" height="100" border="0"/&gt;
+[![Project Stats](https://www.openhub.net/p/javamelody/widgets/project_thin_badge.gif)](https://www.openhub.net/p/javamelody) (Ohloh)
