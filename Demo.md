@@ -4,7 +4,7 @@ If you know where to restart the demo (freely if possible), please send a messag
 
 CloudBees DEV@Cloud is still providing [continuous integration](ContinuousIntegration.md) and nightly builds.
 
-<a href='http://www.cloudbees.com/'><img src='http://javamelody.googlecode.com/svn/trunk/javamelody-core/src/site/resources/images/Button-Built-on-CB-1.png' alt='Built on CloudBees' width='20%' /></a>
+<a href='http://www.cloudbees.com/'><img src='resources/images/Button-Built-on-CB-1.png' alt='Built on CloudBees' width='20%' /></a>
 
 ~~There is a public demo of JavaMelody. It is based on the latest source in trunk and is continuously deployed with DEV@CLOUD by [CloudBees](http://www.cloudbees.com). It features http (GWT), services (java interfaces) and SQL (jdbc, Mysql) monitoring in particular.~~
 
