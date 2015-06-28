@@ -6,7 +6,7 @@
 
 ### Browsing the sources and javadoc ###
 
-> You can [browse](../master) the development sources from svn or you can [download](../releases) the zip file of a release which includes the sources of that release.
+> You can [browse](../master) the development sources from svn or you can [download](../../releases) the zip file of a release which includes the sources of that release.
 
 > You can also browse the latest [javadoc](https://javamelody.ci.cloudbees.com/job/javamelody/site/apidocs/index.html), [sources](https://javamelody.ci.cloudbees.com/job/javamelody/site/xref/index.html) and other [reports](https://javamelody.ci.cloudbees.com/job/javamelody/) from the [CloudBees](http://www.cloudbees.com/) Jenkins CI (snapshot from trunk).
 
@@ -14,7 +14,7 @@
 
 ### Building from sources ###
 
-> The zip file available in "[Releases](../releases)" contains the java sources with an [ant](http://ant.apache.org) script build.xml and a pom.xml file for [maven](http://maven.apache.org)
+> The zip file available in "[Releases](../../releases)" contains the java sources with an [ant](http://ant.apache.org) script build.xml and a pom.xml file for [maven](http://maven.apache.org)
 > and contains also the javadoc, the eclipse project, the jar files.
 > If you want to rebuild the development version and not a particular release, clone from
 > http://javamelody.googlecode.com/svn/trunk/javamelody-core/ [TODO]
