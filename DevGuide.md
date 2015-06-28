@@ -2,25 +2,25 @@
 
 ### Download nightly build ###
 
-> You can download the [nightly build](https://javamelody.ci.cloudbees.com/job/javamelody/) (snapshot from trunk), from [CloudBees](http://www.cloudbees.com/) Jenkins CI. <a href='http://www.cloudbees.com/'><img src='http://javamelody.googlecode.com/svn/trunk/javamelody-core/src/site/resources/images/Button-Built-on-CB-1.png' alt='Built on CloudBees' width='20%' /></a>
+> You can download the [nightly build](https://javamelody.ci.cloudbees.com/job/javamelody/) (snapshot from trunk), from [CloudBees](http://www.cloudbees.com/) Jenkins CI. <a href='http://www.cloudbees.com/'><img src='resources/images/Button-Built-on-CB-1.png' alt='Built on CloudBees' width='20%' /></a>
 
 ### Browsing the sources and javadoc ###
 
-> You can [browse](http://code.google.com/p/javamelody/source/browse/) the development sources from svn or you can [download](https://code.google.com/p/javamelody/wiki/Downloads) the zip file of a release which includes the sources of that release.
+> You can [browse](../master) the development sources from svn or you can [download](../releases) the zip file of a release which includes the sources of that release.
 
 > You can also browse the latest [javadoc](https://javamelody.ci.cloudbees.com/job/javamelody/site/apidocs/index.html), [sources](https://javamelody.ci.cloudbees.com/job/javamelody/site/xref/index.html) and other [reports](https://javamelody.ci.cloudbees.com/job/javamelody/) from the [CloudBees](http://www.cloudbees.com/) Jenkins CI (snapshot from trunk).
 
-> You can also browse the sources at [grepcode](http://grepcode.com/file/repo1.maven.org/maven2/net.bull.javamelody/javamelody-core/1.54.0/net/bull/javamelody/MonitoringFilter.java) with point and click, except that grepcode does not display the latest version in general.
+> You can also browse the sources at [grepcode](http://grepcode.com/file/repo1.maven.org/maven2/net.bull.javamelody/javamelody-core/1.55.0/net/bull/javamelody/MonitoringFilter.java) with point and click, except that grepcode does not display the latest version in general.
 
 ### Building from sources ###
 
-> The zip file available in "[Download](https://code.google.com/p/javamelody/wiki/Downloads)" contains the java sources with an [ant](http://ant.apache.org) script build.xml and a pom.xml file for [maven](http://maven.apache.org)
+> The zip file available in "[Download](../releases)" contains the java sources with an [ant](http://ant.apache.org) script build.xml and a pom.xml file for [maven](http://maven.apache.org)
 > and contains also the javadoc, the eclipse project, the jar files.
-> If you want to rebuild the development version and not a particular release, you have to do an anonymous checkout from
-> http://javamelody.googlecode.com/svn/trunk/javamelody-core/ (with your favorite IDE such as Eclipse or with [TortoiseSVN](http://tortoisesvn.tigris.org/) if Windows)
+> If you want to rebuild the development version and not a particular release, clone from
+> http://javamelody.googlecode.com/svn/trunk/javamelody-core/ [TODO]
 
 > After decompressing the zip file or after the checkout, you can use the "all" target of the ant script (without maven) to recompile from sources
-> and to build the javamelody.jar, jira-javamelody.jar and javamelody.war files which are those available in "Download".
+> and to build the javamelody.jar, jira-javamelody.jar and javamelody.war files which are those available in "Releases".
 > You must define the environment variable JAVA\_HOME with the path
 > of a JDK 1.7 to compile the sources.
 
@@ -34,57 +34,11 @@
 > or on unit tests (checkstyle, findbugs, pmd, cpd, junit, cobertura). You will need Maven 3.0.4 or later for that.
 
 
-
-### Github mirror ###
-
-Sources from SVN http://javamelody.googlecode.com/svn/trunk/javamelody-core/ are mirrored in Github: https://github.com/evernat/javamelody
-
-The Github mirror is synchronized once a day by this Jenkins [job](https://javamelody.ci.cloudbees.com/job/svn_to_git_mirroring/).
-
-
-### Import in Eclipse the sources of current development version ###
-
-To import from the SVN server the sources of the version currently in development, with Eclipse 4.2 using a JDK 1.7 and the subversion plugin (maven plugin m2e is also recommended to simplify these steps):
-
-  * Click the task Import in File menu
-
-  * Choose SVN, Project from SVN
-
-  * To create a SVN repository, write the URL http://javamelody.googlecode.com/svn/trunk/javamelody-core (no authentication) then click Next
-
-  * Choose the resource of URL http://javamelody.googlecode.com/svn/trunk/javamelody-core (Select again the URL in the combo-box if needed)
-
-  * Click Finish
-
-  * Eclipse imports the project javamelody-core with the sources, then it compiles all
-> (maven must works and be connected to download the dependencies,
-> otherwise add them manually in the Build-Path from src/main/lib and src/test/test-webapp/WEB-INF/lib)
-
-  * It is also possible to import the projects javamelody-test-webapp and javamelody-collector-server which are next to javamelody-core in SVN
-
-
-To rebuild the jar and the war of JavaMelody:
-
-  * Do a right-click on the build.xml file in the project javamelody-core, then select Run As, Ant Build
-> which will launch the task by default "all" of the ant script. (Note: in the same script, the task "test" launches the unit tests.)
-
-  * Wait about 20 seconds for the end of the execution of the script
-
-  * Do a Refresh (F5) on the project javamelody-core
-
-  * In the files of the project, the javamelody.zip file appears and contains the rebuilt jars and war of javamelody
-
-
-After some weeks for example, in order to update your sources with the new developments:
-
-  * Do a right-click on the project javamelody-core, then select Team, Update
-
-
 ### Development ###
 
 > The development is done with [Eclipse](http://www.eclipse.org) in its latest version and with the jdk 1.7 at least for compilation.
 
-> The manager of sources is Subversion at	http://javamelody.googlecode.com/svn/trunk/
+> The manager of sources is GitHub at	http://javamelody.googlecode.com/svn/trunk/ [TODO]
 
 > The charset of files is UTF-8. The Eclipse configuration is supplied in sources with the configuration of
 > code formater, clean-up, warnings and of checkstyle, pmd, findbugs and lint4j plugins.
@@ -93,14 +47,13 @@ After some weeks for example, in order to update your sources with the new devel
 > The official languages of the project are french for javadoc but english for technical terms.
 > (This provides a clean separation between functional and technical vocabulary, given that you speak French obviously).
 
-> The diagrams in the OpenOffice [map](http://javamelody.googlecode.com/svn/trunk/javamelody-core/src/site/resources/Map.odp) or the other [one](http://javamelody.googlecode.com/svn/trunk/javamelody-core/src/site/resources/MethodCallsMap.odp) may help to understand.
-
+> The diagrams in the OpenOffice [map](resources/Map.odp) or the other [one](resources/MethodCallsMap.odp) may help to understand.
 
 ### Tests ###
 
 > The JUnit tests can be launched with the "test" target of the ant script, or with maven or in [ContinuousIntegration](ContinuousIntegration.md).
 
-> The manual tests are written in the OpenOffice [Test plan](http://javamelody.googlecode.com/svn/trunk/javamelody-core/src/site/resources/Test%20plan.ods).
+> The manual tests are written in the OpenOffice [Test plan](resources/Test%20plan.ods).
 
 ### Plugins ###
 
