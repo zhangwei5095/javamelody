@@ -45,6 +45,5 @@ The JIRA/Confluence/Bamboo plugin is available [here](https://marketplace.atlass
 
 [Roots conference slides](http://www.slideshare.net/djkarlsen/significance-of-metrics) and [video](http://vimeo.com/channels/rootsconf#24706626) by David Karlsen
 
-<a href='http://www.cloudbees.com/'><img src='img/Button-Built-on-CB-1.png' alt='Built on CloudBees' width='20%' /></a>
-
 [Nightly build](https://javamelody.ci.cloudbees.com/job/javamelody/), [javadoc](https://javamelody.ci.cloudbees.com/job/javamelody/site/apidocs/index.html), [sources](https://javamelody.ci.cloudbees.com/job/javamelody/site/xref/index.html)
+<a href='http://www.cloudbees.com/'><img src='resources/images/Button-Built-on-CB-1.png' alt='Built on CloudBees' width='15%' /></a>
