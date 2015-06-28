@@ -1,4 +1,4 @@
-<a href='Screenshots.md'><img src='http://javamelody.googlecode.com/svn/trunk/javamelody-core/src/site/resources/screenshots/graphs.png' alt='Screenshots' width='50%' title='Screenshots' /></a>
+<a href='Screenshots.md#charts'><img src='http://javamelody.googlecode.com/svn/trunk/javamelody-core/src/site/resources/screenshots/graphs.png' alt='Screenshots' width='50%' title='Screenshots' /></a>
 <a href='http://code.google.com/p/javamelody/wiki/Donate'><img src='http://javamelody.googlecode.com/svn/wiki/images/btn_donate_LG.gif' /></a>
 <br /><br />
 The goal of JavaMelody is to monitor Java or Java EE application servers in QA and production environments. It is not a tool to simulate requests from users, it is a tool to measure and calculate statistics on real operation of an application depending on the usage of the application by users.
