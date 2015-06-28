@@ -1,4 +1,4 @@
-<a href='http://code.google.com/p/javamelody/wiki/Screenshots'><img src='http://javamelody.googlecode.com/svn/trunk/javamelody-core/src/site/resources/screenshots/graphs.png' alt='Screenshots' width='50%' title='Screenshots' /></a>
+<a href='Screenshots.md'><img src='http://javamelody.googlecode.com/svn/trunk/javamelody-core/src/site/resources/screenshots/graphs.png' alt='Screenshots' width='50%' title='Screenshots' /></a>
 <a href='http://code.google.com/p/javamelody/wiki/Donate'><img src='http://javamelody.googlecode.com/svn/wiki/images/btn_donate_LG.gif' /></a>
 <br /><br />
 The goal of JavaMelody is to monitor Java or Java EE application servers in QA and production environments. It is not a tool to simulate requests from users, it is a tool to measure and calculate statistics on real operation of an application depending on the usage of the application by users.
@@ -39,9 +39,9 @@ An optional and independent collect server may be used if necessary to unload th
 
 JavaMelody users' group is at http://groups.google.com/group/javamelody (email: javamelody@googlegroups.com).
 
-Jenkins / Hudson "Monitoring" plugin with JavaMelody is available on Jenkins / Hudson management page and described [here](http://wiki.jenkins-ci.org/display/JENKINS/Monitoring)
+Jenkins "Monitoring" plugin with JavaMelody is available on Jenkins management page and described [here](http://wiki.jenkins-ci.org/display/JENKINS/Monitoring)
 
-The JIRA/Confluence/Bamboo plugin is available [here](https://plugins.atlassian.com/plugin/details/20909)
+The JIRA/Confluence/Bamboo plugin is available [here](https://marketplace.atlassian.com/plugins/net.bull.javamelody)
 
 [Roots conference slides](http://www.slideshare.net/djkarlsen/significance-of-metrics) and [video](http://vimeo.com/channels/rootsconf#24706626) by David Karlsen
 
