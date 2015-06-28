@@ -14,7 +14,7 @@
 
 ### Building from sources ###
 
-> The zip file available in "[Download](../releases)" contains the java sources with an [ant](http://ant.apache.org) script build.xml and a pom.xml file for [maven](http://maven.apache.org)
+> The zip file available in "[Releases](../releases)" contains the java sources with an [ant](http://ant.apache.org) script build.xml and a pom.xml file for [maven](http://maven.apache.org)
 > and contains also the javadoc, the eclipse project, the jar files.
 > If you want to rebuild the development version and not a particular release, clone from
 > http://javamelody.googlecode.com/svn/trunk/javamelody-core/ [TODO]
@@ -47,13 +47,13 @@
 > The official languages of the project are french for javadoc but english for technical terms.
 > (This provides a clean separation between functional and technical vocabulary, given that you speak French obviously).
 
-> The diagrams in the OpenOffice [map](../raw/wiki/resources/Map.odp) or the other [one](../raw/wiki/resources/MethodCallsMap.odp) may help to understand.
+> The diagrams in the OpenOffice [map](../../raw/wiki/resources/Map.odp) or the other [one](../../raw/wiki/resources/MethodCallsMap.odp) may help to understand.
 
 ### Tests ###
 
 > The JUnit tests can be launched with the "test" target of the ant script, or with maven or in [ContinuousIntegration](ContinuousIntegration.md).
 
-> The manual tests are written in the OpenOffice [Test plan](../raw/wiki/resources/Test%20plan.ods).
+> The manual tests are written in the OpenOffice [Test plan](../../raw/wiki/resources/Test%20plan.ods).
 
 ### Plugins ###
 
