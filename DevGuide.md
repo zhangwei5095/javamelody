@@ -6,7 +6,7 @@
 
 ### Browsing the sources and javadoc ###
 
-> You can [browse](../../master) the development sources from svn or you can [download](../../releases) the zip file of a release which includes the sources of that release.
+> You can [browse](../..) the development sources from svn or you can [download](../../releases) the zip file of a release which includes the sources of that release.
 
 > You can also browse the latest [javadoc](https://javamelody.ci.cloudbees.com/job/javamelody/site/apidocs/index.html), [sources](https://javamelody.ci.cloudbees.com/job/javamelody/site/xref/index.html) and other [reports](https://javamelody.ci.cloudbees.com/job/javamelody/) from the [CloudBees](http://www.cloudbees.com/) Jenkins CI (snapshot from trunk).
 
