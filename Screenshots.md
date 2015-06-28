@@ -30,7 +30,7 @@
 <a href='../master/javamelody-core/src/site/resources/screenshots/autres_courbes.png'><img src='../master/javamelody-core/src/site/resources/screenshots/autres_courbes.png' alt='Autres courbes' width='50%' /></a>
 
 <h3>Statistics of requests</h3>
-<a href='../master/javamelody-core/src/site/resources/screenshots/statistiques.png'><img src='../master/javamelody-core/src/site/resources/screenshots/statistiques.png' alt='Statistiques requêtes' width='50%' /></a>
+<a href='../../raw/wiki/resources/screenshots/caches.png'><img src='../../raw/wiki/resources/screenshots/statistiques.png' alt='Statistiques requêtes' width='50%' /></a>
 
 <h3>French (http, sql, spring, jsp)</h3>
 <a href='../master/javamelody-core/src/site/resources/screenshots/french_http_sql_spring_jsp.png'><img src='../master/javamelody-core/src/site/resources/screenshots/french_http_sql_spring_jsp.png' alt='Français' width='50%' /></a>
