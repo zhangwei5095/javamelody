@@ -1,4 +1,4 @@
-&lt;wiki:gadget url="http://www.ohloh.net/p/javamelody/widgets/project\_partner\_badge.xml" height="55" border="0" /&gt;
+[![Project Stats](https://www.openhub.net/p/javamelody/widgets/project_thin_badge.gif)](https://www.openhub.net/p/javamelody)
 
 **You can support the JavaMelody project by making a donation like $10. It will be used to buy hardware or hosting services.**
 
