@@ -387,7 +387,7 @@ To monitor them, it is needed to do the following, for each JDBC DataSource:
   * In the GlassFish admin console, rename your JDBC Resource (DataSource) from "jdbc/MyDataSource" to "jdbc/MyDataSource\_uncached" for example
   * Also in the GlassFish admin console, create a JNDI custom resource like this, without forgetting then "jndi-ref" property:
 
-<a href='http://javamelody.googlecode.com/svn/wiki/images/GlassFish_create-custom-resource.png'><img src='http://javamelody.googlecode.com/svn/wiki/images/GlassFish_create-custom-resource.png' alt='New Custom Resource' width='80%' />
+<a href='resources/images/GlassFish_create-custom-resource.png'><img src='resources/images/GlassFish_create-custom-resource.png' alt='New Custom Resource' width='80%' />
 </a>
 
 or use the following asadmin command
