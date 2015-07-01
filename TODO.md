@@ -84,4 +84,5 @@ And
   1. In the list of http sessions, the city or country could be displayed for each session based on IP address of the client. A link to an online map can be given using latitude and longitude. A free [database](http://dev.maxmind.com/geoip/geoip2/geolite2/) could be downloaded or an [online service](https://code.google.com/p/geoip-appengine/) could be used for that.
   1. In the database informations report, be able to switch between DB when there are several, instead of displaying only the report for the first DB.
   1. When a http request is very very long without white-space, it may cause the statistics table to be much wider than the screen. The width of that column should be auto according to the content, but with a max.
+  1. Like for the cpu, record allocated bytes by the current thread between beginning and end of requests/services, when possible. https://docs.oracle.com/javase/7/docs/jre/api/management/extension/com/sun/management/ThreadMXBean.html#getThreadAllocatedBytes%28long%29 (since 1.6_u25)
   1. More to come...
