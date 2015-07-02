@@ -10,7 +10,7 @@
   * [Grails Plugin](#grails-plugin)
   * [JavaMelody Setup](#javamelody-setup)
     * [1. Jar files](#1-jar-files)
-    * [2. web.xml file](#2-web.xml-file)
+    * [2. web.xml file](#2-webxml-file)
     * [3. First results](#3-first-results)
     * [4. PDF report generation](#4-pdf-report-generation)
     * [5. Supplements in web.xml](#5-supplements-in-webxml)
