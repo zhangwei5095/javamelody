@@ -163,17 +163,20 @@ Some discussions on the monitoring [overhead in production](Overhead.md) were ar
 	<filter>
 		<filter-name>javamelody</filter-name>
 		<filter-class>net.bull.javamelody.MonitoringFilter</filter-class>
+                <async-supported>true</async-supported>
 	</filter>
 	<filter-mapping>
 		<filter-name>javamelody</filter-name>
 		<url-pattern>/*</url-pattern>
+                <dispatcher>REQUEST</dispatcher>
+                <dispatcher>ASYNC</dispatcher>
 	</filter-mapping>
 	<listener>
 		<listener-class>net.bull.javamelody.SessionListener</listener-class>
 	</listener>
 ```
 
-> If you add these lines in a Servlet API 3.0 webapp, you may also add `<async-supported>true</async-supported>` in the filter to support asynchronous requests.
+> `<async-supported>true</async-supported>` and `<dispatcher>ASYNC</dispatcher>` are needed to support asynchronous requests with Servlet API 3.0. 
 
 ### 3. First results ###
 
