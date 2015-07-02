@@ -1,6 +1,6 @@
 ### Next release (trunk) ###
 
-  * fix: check if async before flushing the response, ([2bb18a6](../commit/2bb18a6f2d7aefdbf8eda489fd68f57487e67570) thanks to _Mark Thomas_)
+  * fix: check if async before flushing the response, ([2bb18a6](../../commit/2bb18a6f2d7aefdbf8eda489fd68f57487e67570) thanks to _Mark Thomas_)
   * fix [issue 338](../../issues/338): JavaMelody swallows response when some Spring WebAsyncTask/Callable is used (thanks to _Violeta Georgieva_). The [web.xml example](../wiki/UserGuide.md#2-webxml-file) in the User's guide is also changed for Async requests with Servlet API 3.0.
   * fix: in latest JIRA versions, monitoring report outputs garbage (gzip compression is now enabled by default in JIRA)
 
