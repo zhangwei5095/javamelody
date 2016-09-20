@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -102,7 +102,8 @@ abstract class FilterServletResponseWrapper extends HttpServletResponseWrapper {
 	@Override
 	public ServletOutputStream getOutputStream() throws IOException {
 		if (writer != null) {
-			throw new IllegalStateException("getWriter() has already been called for this response");
+			throw new IllegalStateException(
+					"getWriter() has already been called for this response");
 		}
 
 		if (stream == null) {
@@ -133,7 +134,7 @@ abstract class FilterServletResponseWrapper extends HttpServletResponseWrapper {
 			final String charEnc = getResponse().getCharacterEncoding();
 			// HttpServletResponse.getCharacterEncoding() shouldn't return null
 			// according the spec, so feel free to remove that "if"
-			PrintWriter result;
+			final PrintWriter result;
 			if (charEnc == null) {
 				result = new PrintWriter(outputStream);
 			} else {

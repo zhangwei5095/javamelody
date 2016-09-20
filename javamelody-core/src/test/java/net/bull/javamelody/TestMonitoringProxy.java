@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -69,8 +69,8 @@ public class TestMonitoringProxy {
 			assertSame(requestsCount, 3, servicesCounter.getRequestsCount());
 		}
 
-		final SpringTestFacade springTestFacade2 = MonitoringProxy.createProxy(
-				new SpringTestFacadeImpl(), "my facade name");
+		final SpringTestFacade springTestFacade2 = MonitoringProxy
+				.createProxy(new SpringTestFacadeImpl(), "my facade name");
 		assertNotNull("now()", springTestFacade2.now());
 		assertSame(requestsCount, 4, servicesCounter.getRequestsCount());
 	}

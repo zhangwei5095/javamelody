@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -25,10 +25,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import net.bull.javamelody.SamplingProfiler.SampledMethod;
-
 import org.junit.Before;
 import org.junit.Test;
+
+import net.bull.javamelody.SamplingProfiler.SampledMethod;
 
 /**
  * Test unitaire de la classe HtmlHotspotsReport.

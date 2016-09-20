@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -72,12 +72,14 @@ class HtmlJobInformationsReport extends HtmlAbstractReport {
 		if (systemActionsEnabled) {
 			final String onClickConfirm = "' onclick=\"javascript:return confirm('";
 			final String endOnClickConfirm = "');\">";
-			writeln("<a href='?action=pause_job&amp;jobId=all" + onClickConfirm
-					+ getStringForJavascript("confirm_pause_all_jobs") + endOnClickConfirm);
+			writeln("<a href='?action=pause_job&amp;jobId=all" + getCsrfTokenUrlPart()
+					+ onClickConfirm + getStringForJavascript("confirm_pause_all_jobs")
+					+ endOnClickConfirm);
 			writeln("<img src='?resource=control_pause_blue.png' width='18' height='18' alt=\"#Pause_all_jobs#\" /> #Pause_all_jobs#</a>");
 			writeln("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
-			writeln("<a href='?action=resume_job&amp;jobId=all" + onClickConfirm
-					+ getStringForJavascript("confirm_resume_all_jobs") + endOnClickConfirm);
+			writeln("<a href='?action=resume_job&amp;jobId=all" + getCsrfTokenUrlPart()
+					+ onClickConfirm + getStringForJavascript("confirm_resume_all_jobs")
+					+ endOnClickConfirm);
 			writeln("<img src='?resource=control_play_blue.png' width='18' height='18' alt=\"#Resume_all_jobs#\" /> #Resume_all_jobs#</a>");
 			writeln("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
 		}
@@ -195,16 +197,19 @@ class HtmlJobInformationsReport extends HtmlAbstractReport {
 		}
 	}
 
-	private void writePauseJobAndResumeJobLinks(JobInformations jobInformations) throws IOException {
+	private void writePauseJobAndResumeJobLinks(JobInformations jobInformations)
+			throws IOException {
 		write("</td> <td align='center' class='noPrint'>");
 		final String onClickConfirm = "' onclick=\"javascript:return confirm('";
 		final String endOnClickConfirm = "');\">";
 		writeln("<a href='?action=pause_job&amp;jobId=" + jobInformations.getGlobalJobId()
-				+ onClickConfirm + getStringForJavascript("confirm_pause_job") + endOnClickConfirm);
+				+ getCsrfTokenUrlPart() + onClickConfirm
+				+ getStringForJavascript("confirm_pause_job") + endOnClickConfirm);
 		writeln("<img src='?resource=control_pause_blue.png' width='18' height='18' alt=\"#Pause_job#\" title=\"#Pause_job#\" /></a>");
 		write("</td> <td align='center' class='noPrint'>");
 		writeln("<a href='?action=resume_job&amp;jobId=" + jobInformations.getGlobalJobId()
-				+ onClickConfirm + getStringForJavascript("confirm_resume_job") + endOnClickConfirm);
+				+ getCsrfTokenUrlPart() + onClickConfirm
+				+ getStringForJavascript("confirm_resume_job") + endOnClickConfirm);
 		writeln("<img src='?resource=control_play_blue.png' width='18' height='18' alt=\"#Resume_job#\" title=\"#Resume_job#\" /></a>");
 	}
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -103,8 +103,8 @@ class CounterStorage {
 		if (file.exists()) {
 			final FileInputStream in = new FileInputStream(file);
 			try {
-				final ObjectInputStream input = new ObjectInputStream(new GZIPInputStream(
-						new BufferedInputStream(in)));
+				final ObjectInputStream input = TransportFormat
+						.createObjectInputStream(new GZIPInputStream(new BufferedInputStream(in)));
 				try {
 					// on retourne l'instance du counter lue
 					return (Counter) input.readObject();

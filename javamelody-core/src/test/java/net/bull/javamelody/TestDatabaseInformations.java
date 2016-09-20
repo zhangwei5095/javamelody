@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -28,11 +28,11 @@ import java.util.Properties;
 
 import javax.naming.NamingException;
 
-import net.bull.javamelody.DatabaseInformations.Database;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import net.bull.javamelody.DatabaseInformations.Database;
 
 /**
  * Test unitaire de la classe DatabaseInformations.

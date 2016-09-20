@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -25,9 +25,6 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.table.TableColumnModel;
 
-import net.bull.javamelody.I18NAdapter;
-import net.bull.javamelody.swing.table.MBasicTable;
-
 import com.lowagie.text.BadElementException;
 import com.lowagie.text.DocWriter;
 import com.lowagie.text.Document;
@@ -41,6 +38,9 @@ import com.lowagie.text.Phrase;
 import com.lowagie.text.Rectangle;
 import com.lowagie.text.Table;
 import com.lowagie.text.pdf.PdfWriter;
+
+import net.bull.javamelody.I18NAdapter;
+import net.bull.javamelody.swing.table.MBasicTable;
 
 /**
  * Objet d'impression/export pour Pdf (portrait ou paysage) en utilisant iText.
@@ -260,8 +260,8 @@ public class MPdfWriter extends MPrinter {
 		datatable.setWidth(100f);
 
 		// table header
-		final com.lowagie.text.Font font = FontFactory
-				.getFont(FontFactory.HELVETICA, 12, Font.BOLD);
+		final com.lowagie.text.Font font = FontFactory.getFont(FontFactory.HELVETICA, 12,
+				Font.BOLD);
 		datatable.getDefaultCell().setBorderWidth(2);
 		datatable.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
 		// datatable.setDefaultCellGrayFill(0.75f);

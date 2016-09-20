@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -62,7 +62,8 @@ class FilterContext {
 
 		boolean initOk = false;
 		this.timer = new Timer("javamelody"
-				+ Parameters.getContextPath(Parameters.getServletContext()).replace('/', ' '), true);
+				+ Parameters.getContextPath(Parameters.getServletContext()).replace('/', ' '),
+				true);
 		try {
 			logSystemInformationsAndParameters();
 
@@ -134,13 +135,13 @@ class FilterContext {
 		final List<Counter> counters;
 		if (JobInformations.QUARTZ_AVAILABLE) {
 			final Counter jobCounter = JobGlobalListener.getJobCounter();
-			counters = Arrays.asList(httpCounter, sqlCounter, jpaCounter, ejbCounter,
-					springCounter, guiceCounter, servicesCounter, strutsCounter, jsfCounter,
-					jspCounter, errorCounter, logCounter, jobCounter);
+			counters = Arrays.asList(httpCounter, sqlCounter, jpaCounter, ejbCounter, springCounter,
+					guiceCounter, servicesCounter, strutsCounter, jsfCounter, jspCounter,
+					errorCounter, logCounter, jobCounter);
 		} else {
-			counters = Arrays.asList(httpCounter, sqlCounter, jpaCounter, ejbCounter,
-					springCounter, guiceCounter, servicesCounter, strutsCounter, jsfCounter,
-					jspCounter, errorCounter, logCounter);
+			counters = Arrays.asList(httpCounter, sqlCounter, jpaCounter, ejbCounter, springCounter,
+					guiceCounter, servicesCounter, strutsCounter, jsfCounter, jspCounter,
+					errorCounter, logCounter);
 		}
 
 		setRequestTransformPatterns(counters);
@@ -169,8 +170,8 @@ class FilterContext {
 	private static void setRequestTransformPatterns(List<Counter> counters) {
 		for (final Counter counter : counters) {
 			// le paramètre pour ce nom de compteur doit exister
-			final Parameter parameter = Parameter.valueOfIgnoreCase(counter.getName()
-					+ "_TRANSFORM_PATTERN");
+			final Parameter parameter = Parameter
+					.valueOfIgnoreCase(counter.getName() + "_TRANSFORM_PATTERN");
 			if (Parameters.getParameter(parameter) != null) {
 				final Pattern pattern = Pattern.compile(Parameters.getParameter(parameter),
 						Pattern.MULTILINE | Pattern.DOTALL);
@@ -254,7 +255,8 @@ class FilterContext {
 			if (excludedPackagesParameter == null && includedPackagesParameter == null) {
 				sampler = new SamplingProfiler();
 			} else {
-				sampler = new SamplingProfiler(excludedPackagesParameter, includedPackagesParameter);
+				sampler = new SamplingProfiler(excludedPackagesParameter,
+						includedPackagesParameter);
 			}
 			final TimerTask samplingTimerTask = new TimerTask() {
 				@Override
@@ -262,8 +264,8 @@ class FilterContext {
 					sampler.update();
 				}
 			};
-			final long periodInMillis = Math.round(Double.parseDouble(Parameters
-					.getParameter(Parameter.SAMPLING_SECONDS)) * 1000);
+			final long periodInMillis = Math.round(
+					Double.parseDouble(Parameters.getParameter(Parameter.SAMPLING_SECONDS)) * 1000);
 			this.timer.schedule(samplingTimerTask, 10000, periodInMillis);
 			LOG.debug("hotspots sampling initialized");
 
@@ -279,6 +281,11 @@ class FilterContext {
 		if (LOG.LOG4J_ENABLED) {
 			// si log4j est disponible on branche aussi l'appender pour le counter de logs
 			Log4JAppender.getSingleton().register();
+		}
+
+		if (LOG.LOG4J2_ENABLED) {
+			// si log4j2 est disponible on branche aussi l'appender pour le counter de logs
+			Log4J2Appender.getSingleton().register();
 		}
 
 		if (LOG.LOGBACK_ENABLED) {

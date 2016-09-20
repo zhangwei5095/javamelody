@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -28,8 +28,8 @@ import javax.faces.event.ActionListener;
 public class JsfActionListener implements ActionListener {
 	private static final Counter JSF_COUNTER = MonitoringProxy.getJsfCounter();
 	private static final boolean COUNTER_HIDDEN = Parameters.isCounterHidden(JSF_COUNTER.getName());
-	private static final boolean DISABLED = Boolean.parseBoolean(Parameters
-			.getParameter(Parameter.DISABLED));
+	private static final boolean DISABLED = Boolean
+			.parseBoolean(Parameters.getParameter(Parameter.DISABLED));
 	private final ActionListener delegateActionListener;
 
 	/**

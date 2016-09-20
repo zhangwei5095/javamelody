@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -148,7 +148,8 @@ class StatisticsPanel extends MelodyPanel {
 		detailsPanel.validate();
 	}
 
-	void showRequestsAggregatedOrFilteredByClassName(String requestId, final MButton detailsButton) {
+	void showRequestsAggregatedOrFilteredByClassName(String requestId,
+			final MButton detailsButton) {
 		final List<CounterRequest> requests = new CounterRequestAggregation(counter)
 				.getRequestsAggregatedOrFilteredByClassName(requestId);
 		tablePanel.setList(requests);

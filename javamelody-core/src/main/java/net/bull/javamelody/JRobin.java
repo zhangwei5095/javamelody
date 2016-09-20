@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -155,8 +155,8 @@ final class JRobin {
 		final File rrdFile = new File(rrdFileName);
 		final File rrdDirectory = rrdFile.getParentFile();
 		if (!rrdDirectory.mkdirs() && !rrdDirectory.exists()) {
-			throw new IOException("JavaMelody directory can't be created: "
-					+ rrdDirectory.getPath());
+			throw new IOException(
+					"JavaMelody directory can't be created: " + rrdDirectory.getPath());
 		}
 		// cf issue 41: rrdFile could have been created with length 0 if out of disk space
 		// (fix IOException: Read failed, file xxx.rrd not mapped for I/O)
@@ -217,8 +217,8 @@ final class JRobin {
 
 			// create common part of graph definition
 			final RrdGraphDef graphDef = new RrdGraphDef();
-			if (Locale.CHINESE.getLanguage().equals(
-					I18N.getResourceBundle().getLocale().getLanguage())) {
+			if (Locale.CHINESE.getLanguage()
+					.equals(I18N.getResourceBundle().getLocale().getLanguage())) {
 				graphDef.setSmallFont(new Font(Font.MONOSPACED, Font.PLAIN, 10));
 				graphDef.setLargeFont(new Font(Font.MONOSPACED, Font.BOLD, 12));
 			}
@@ -273,15 +273,15 @@ final class JRobin {
 			if (range.getPeriod() == null) {
 				// si période entre 2 dates et si pas de zoom,
 				// alors on réduit de 2 point la fonte du titre pour qu'il rentre dans le cadre
-				graphDef.setLargeFont(graphDef.getLargeFont().deriveFont(
-						graphDef.getLargeFont().getSize2D() - 2f));
+				graphDef.setLargeFont(graphDef.getLargeFont()
+						.deriveFont(graphDef.getLargeFont().getSize2D() - 2f));
 			}
 		}
 		graphDef.setStartTime(startTime);
 		graphDef.setEndTime(endTime);
 		graphDef.setTitle(titleStart + titleEnd);
-		graphDef.setFirstDayOfWeek(Calendar.getInstance(I18N.getCurrentLocale())
-				.getFirstDayOfWeek());
+		graphDef.setFirstDayOfWeek(
+				Calendar.getInstance(I18N.getCurrentLocale()).getFirstDayOfWeek());
 		// or if the user locale patch is merged we should do:
 		// (https://sourceforge.net/tracker/?func=detail&aid=3403733&group_id=82668&atid=566807)
 		//graphDef.setLocale(I18N.getCurrentLocale());
@@ -373,6 +373,23 @@ final class JRobin {
 				addValue(value);
 			}
 			throw createIOException(e);
+		} catch (final IllegalArgumentException e) {
+			// catch IllegalArgumentException for issue 533:
+			//			java.lang.IllegalArgumentException
+			//			at java.nio.Buffer.position(Buffer.java:244)
+			//			at net.bull.javamelody.RrdNioBackend.read(RrdNioBackend.java:147)
+			//          ...
+			//			at org.jrobin.core.RrdDbPool.requestRrdDb(RrdDbPool.java:103)
+			//			at net.bull.javamelody.JRobin.addValue(JRobin.java:334)
+
+			// le fichier RRD a été corrompu, par exemple en tuant le process java au milieu
+			// d'un write, donc on efface le fichier corrompu et on le recrée pour corriger
+			// le problème
+			LOG.debug("A JRobin file was found corrupted and was reset: "
+					+ new File(rrdFileName).getPath());
+			resetFile();
+			addValue(value);
+			throw createIOException(e);
 		}
 	}
 
@@ -414,8 +431,8 @@ final class JRobin {
 			return I18N.getString(getName());
 		}
 		// c'est un jrobin issu d'un CounterRequest dans le Collector
-		final String shortRequestName = requestName
-				.substring(0, Math.min(30, requestName.length()));
+		final String shortRequestName = requestName.substring(0,
+				Math.min(30, requestName.length()));
 		// plus nécessaire:  if (getName().startsWith("error")) {
 		// c'est un jrobin issu d'un CounterRequest du Counter "error"
 		// return I18N.getString("Erreurs_par_minute_pour") + ' ' + shortRequestName; }

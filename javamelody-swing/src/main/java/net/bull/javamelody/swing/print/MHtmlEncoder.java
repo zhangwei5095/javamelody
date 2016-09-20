@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -43,10 +43,7 @@ final class MHtmlEncoder {
 	static {
 		// Mapping des caractères spéciaux vers leur code HTML
 		// Respecter l'espace entre le caractere et son code.
-		final String[] htmlCharacters = {
-				"€ &euro;",
-				"Œ &#140;",
-				"œ &#156;", // latin-15
+		final String[] htmlCharacters = { "€ &euro;", "Œ &#140;", "œ &#156;", // latin-15
 
 				// pas de nbsp (insécable à l'impression) "  &nbsp;",
 				"\n <br/>", "\r ", "\t &nbsp;&nbsp;&nbsp;&nbsp;",

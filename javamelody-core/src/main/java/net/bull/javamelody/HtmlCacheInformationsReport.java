@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -75,13 +75,15 @@ class HtmlCacheInformationsReport extends HtmlAbstractReport {
 			writeln("#caches_statistics_enable#<br/>");
 		}
 		if (systemActionsEnabled) {
-			writeln("<a href='?action=clear_caches' onclick=\"javascript:return confirm('"
+			writeln("<a href='?action=clear_caches" + getCsrfTokenUrlPart()
+					+ "' onclick=\"javascript:return confirm('"
 					+ getStringForJavascript("confirm_purge_caches") + "');\">");
 			writeln("<img src='?resource=user-trash.png' width='18' height='18' alt=\"#Purge_caches#\" /> #Purge_caches#</a>");
 			writeln("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
 		}
 		// writeDirectly pour éviter traduction car # dans l'url
-		writeDirectly("<a href='http://ehcache.org/apidocs/2.9/net/sf/ehcache/config/CacheConfiguration.html#field_summary'");
+		writeDirectly(
+				"<a href='http://ehcache.org/apidocs/2.9/net/sf/ehcache/config/CacheConfiguration.html#field_summary'");
 		writeln("target='_blank'>Configuration reference</a></div>");
 	}
 
@@ -110,16 +112,16 @@ class HtmlCacheInformationsReport extends HtmlAbstractReport {
 		write("</td>");
 		if (systemActionsEnabled) {
 			write("<td align='center' class='noPrint'>");
-			final String confirmClearCache = javascriptEncode(getFormattedString(
-					"confirm_purge_cache", cacheInformations.getName()));
+			final String confirmClearCache = javascriptEncode(
+					getFormattedString("confirm_purge_cache", cacheInformations.getName()));
 			// writeDirectly pour ne pas gérer de traductions si le nom contient '#'
 			writeDirectly("<a href='?action=clear_cache&amp;cacheId="
-					+ urlEncode(cacheInformations.getName())
+					+ urlEncode(cacheInformations.getName()) + getCsrfTokenUrlPart()
 					+ "' onclick=\"javascript:return confirm('" + confirmClearCache + "');\">");
-			final String title = htmlEncode(getFormattedString("Purge_cache",
-					cacheInformations.getName()));
-			writeDirectly("<img src='?resource=user-trash.png' width='16' height='16' alt='"
-					+ title + "' title='" + title + "' /></a>");
+			final String title = htmlEncode(
+					getFormattedString("Purge_cache", cacheInformations.getName()));
+			writeDirectly("<img src='?resource=user-trash.png' width='16' height='16' alt='" + title
+					+ "' title='" + title + "' /></a>");
 			write("</td>");
 		}
 	}

@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -46,7 +46,8 @@ public final class TransportFormatAdapter {
 	 * @param output OutputStream
 	 * @throws IOException e
 	 */
-	public static void writeJson(Serializable serializable, OutputStream output) throws IOException {
+	public static void writeJson(Serializable serializable, OutputStream output)
+			throws IOException {
 		TransportFormat.JSON.writeSerializableTo(serializable, output);
 	}
 }

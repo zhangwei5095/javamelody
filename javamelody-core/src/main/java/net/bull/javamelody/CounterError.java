@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -32,6 +32,16 @@ class CounterError implements Serializable {
 	private static final long serialVersionUID = 5690702786722045646L;
 	@SuppressWarnings("all")
 	private static final ThreadLocal<HttpServletRequest> HTTP_SERVLET_REQUEST_CONTEXT = new ThreadLocal<HttpServletRequest>();
+
+	/**
+	 * Max size of error message.
+	 */
+	private static final int MESSAGE_MAX_LENGTH = 1000;
+	/**
+	 * Max size of error stack-trace.
+	 */
+	private static final int STACKTRACE_MAX_LENGTH = 50000;
+
 	private final long time;
 	private final String remoteUser;
 	private final String httpRequest;
@@ -42,8 +52,19 @@ class CounterError implements Serializable {
 		super();
 		assert message != null;
 		this.time = System.currentTimeMillis();
-		this.message = message;
-		this.stackTrace = stackTrace;
+
+		if (message.length() > MESSAGE_MAX_LENGTH) {
+			// avoid possible memory errors as javamelody store 100 errors in memory
+			this.message = message.substring(0, MESSAGE_MAX_LENGTH);
+		} else {
+			this.message = message;
+		}
+
+		if (stackTrace != null && stackTrace.length() > STACKTRACE_MAX_LENGTH) {
+			this.stackTrace = stackTrace.substring(0, STACKTRACE_MAX_LENGTH);
+		} else {
+			this.stackTrace = stackTrace;
+		}
 		final HttpServletRequest currentRequest = getCurrentRequest();
 		if (currentRequest == null) {
 			this.remoteUser = null;

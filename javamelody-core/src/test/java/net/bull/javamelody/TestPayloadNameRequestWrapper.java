@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -107,28 +107,7 @@ public class TestPayloadNameRequestWrapper extends EasyMockSupport {
 		expect(request.getInputStream()).andAnswer(new IAnswer<ServletInputStream>() {
 			@Override
 			public ServletInputStream answer() throws Throwable {
-				final ByteArrayInputStream stream = new ByteArrayInputStream(body.getBytes());
-				return new ServletInputStream() {
-					@Override
-					public int read() throws IOException {
-						return stream.read();
-					}
-
-					@Override
-					public boolean isFinished() {
-						return false;
-					}
-
-					@Override
-					public boolean isReady() {
-						return false;
-					}
-
-					@Override
-					public void setReadListener(ReadListener readListener) {
-						// nothing
-					}
-				};
+				return createServletOutputStream();
 			}
 		});
 
@@ -156,8 +135,8 @@ public class TestPayloadNameRequestWrapper extends EasyMockSupport {
 		final Map<String, String[]> parameterMap = new HashMap<String, String[]>();
 
 		if (request.getQueryString() != null) {
-			final Map<String, String[]> queryParams = HttpUtils.parseQueryString(request
-					.getQueryString());
+			final Map<String, String[]> queryParams = HttpUtils
+					.parseQueryString(request.getQueryString());
 			parameterMap.putAll(queryParams);
 		}
 
@@ -188,11 +167,40 @@ public class TestPayloadNameRequestWrapper extends EasyMockSupport {
 		return parameterMap;
 	}
 
+	ServletInputStream createServletOutputStream() {
+		final ByteArrayInputStream stream = new ByteArrayInputStream(body.getBytes());
+		// CHECKSTYLE:OFF
+		return new ServletInputStream() {
+			// CHECKSTYLE:ON
+			@Override
+			public int read() throws IOException {
+				return stream.read();
+			}
+
+			@Override
+			public boolean isFinished() {
+				return false;
+			}
+
+			@Override
+			public boolean isReady() {
+				return false;
+			}
+
+			@Override
+			public void setReadListener(ReadListener readListener) {
+				// nothing
+			}
+		};
+	}
+
 	private static String slurp(InputStream stream) throws IOException {
 		final StringBuilder buffer = new StringBuilder();
 		final Reader reader = new InputStreamReader(stream);
-		for (int n; (n = reader.read()) != -1;) {
-			buffer.append((char) n);
+		int c = reader.read();
+		while (c != -1) {
+			buffer.append((char) c);
+			c = reader.read();
 		}
 		return buffer.toString();
 	}
@@ -400,8 +408,8 @@ public class TestPayloadNameRequestWrapper extends EasyMockSupport {
 
 	private boolean scanForChildTag(String tagName, String xml) throws XMLStreamException {
 		final XMLInputFactory factory = XMLInputFactory.newInstance();
-		final XMLStreamReader reader = factory.createXMLStreamReader(new ByteArrayInputStream(xml
-				.getBytes()));
+		final XMLStreamReader reader = factory
+				.createXMLStreamReader(new ByteArrayInputStream(xml.getBytes()));
 
 		//advance to first tag (reader starts at "begin document")
 		reader.next();

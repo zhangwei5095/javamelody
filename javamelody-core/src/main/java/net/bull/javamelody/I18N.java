@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -115,8 +115,8 @@ final class I18N {
 		final String string = getString(key);
 		// ici, le résultat ne contient pas de valeur variable ni d'attaque puisque ce sont des messages internes et fixes,
 		// donc pas besoin d'encoder avec javascriptEncode, et on conserve les apostrophes lisibles dans les messages
-		return string.replace("\\", "\\\\").replace("\n", "\\n").replace("\"", "\\\"")
-				.replace("'", "\\'");
+		return string.replace("\\", "\\\\").replace("\n", "\\n").replace("\"", "\\\"").replace("'",
+				"\\'");
 	}
 
 	/**
@@ -137,8 +137,8 @@ final class I18N {
 	 * @return String
 	 */
 	static String javascriptEncode(String text) {
-		return text.replace("\\", "\\\\").replace("\n", "\\n").replace("\"", "%22")
-				.replace("'", "%27");
+		return text.replace("\\", "\\\\").replace("\n", "\\n").replace("\"", "%22").replace("'",
+				"%27");
 	}
 
 	static String urlEncode(String text) {

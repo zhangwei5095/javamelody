@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -284,7 +284,7 @@ class HtmlCounterReport extends HtmlAbstractReport {
 						+ getFormattedString("temps_fils_moyen", childCounterName) + "</th>");
 			}
 			table.nextRow();
-			write("<td>");
+			write("<td class='wrappedText'>");
 			writeCounterIcon(request);
 			writeDirectly(htmlEncodeRequestName(request.getId(), request.getName()));
 			if (hasChildren) {
@@ -329,7 +329,7 @@ class HtmlCounterReport extends HtmlAbstractReport {
 		private void writeChildRequest(CounterRequest childRequest, float executionsByRequest,
 				boolean allChildHitsDisplayed) throws IOException {
 			writeln("<td>");
-			writeln("<div style='margin-left: 10px;'>");
+			writeln("<div style='margin-left: 10px;' class='wrappedText'>");
 			writeCounterIcon(childRequest);
 			writeRequestGraph(childRequest.getId(), childRequest.getName());
 			writeln("</div></td><td align='right'>");
@@ -417,7 +417,8 @@ class HtmlCounterReport extends HtmlAbstractReport {
 			writeln("  height = Math.round(width * initialHeight / initialWidth) - 48;");
 			// reload the images
 			// rq : on utilise des caractères unicode pour éviter des warnings
-			writeln("  document.getElementById('img').src = '?graph=" + urlEncode(graphName)
+			writeln("  document.getElementById('img').src = '?graph="
+					+ htmlEncodeButNotSpace(urlEncode(graphName))
 					+ "\\u0026width=' + width + '\\u0026height=' + height;");
 			writeln("  document.getElementById('img').style.width = '';");
 			writeln("}");
@@ -550,7 +551,8 @@ class HtmlCounterReport extends HtmlAbstractReport {
 		}
 		writeln(separator);
 		if (range.getPeriod() == Period.TOUT) {
-			writeln("<a href='?action=clear_counter&amp;counter=" + counterName + "' title='"
+			writeln("<a href='?action=clear_counter&amp;counter=" + counterName
+					+ getCsrfTokenUrlPart() + "' title='"
 					+ getFormattedString("Vider_stats", counterName) + '\'');
 			writeln("class='noPrint' onclick=\"javascript:return confirm('"
 					+ javascriptEncode(getFormattedString("confirm_vider_stats", counterName))
@@ -647,7 +649,7 @@ class HtmlCounterReport extends HtmlAbstractReport {
 	private void writeRequest(CounterRequest request, boolean includeGraph,
 			boolean includeDetailLink, boolean includeSummaryPerClassLink) throws IOException {
 		final String nextColumn = "</td> <td align='right'>";
-		write("<td>");
+		write("<td class='wrappedText'>");
 		writeRequestName(request.getId(), request.getName(), includeGraph, includeDetailLink,
 				includeSummaryPerClassLink);
 		final CounterRequest globalRequest = counterRequestAggregation.getGlobalRequest();
@@ -766,8 +768,8 @@ class HtmlCounterReport extends HtmlAbstractReport {
 		if (requestId.startsWith(Counter.SQL_COUNTER_NAME)) {
 			final String htmlEncoded = htmlEncodeButNotSpace(requestName);
 			// highlight SQL keywords
-			return SQL_KEYWORDS_PATTERN.matcher(htmlEncoded).replaceAll(
-					"<span class='sqlKeyword'>$1</span>");
+			return SQL_KEYWORDS_PATTERN.matcher(htmlEncoded)
+					.replaceAll("<span class='sqlKeyword'>$1</span>");
 		}
 
 		return htmlEncodeButNotSpace(requestName);

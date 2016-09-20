@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -24,8 +24,6 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import net.bull.javamelody.PdfJavaInformationsReport.Bar;
-
 import com.lowagie.text.Anchor;
 import com.lowagie.text.BadElementException;
 import com.lowagie.text.Chunk;
@@ -37,6 +35,8 @@ import com.lowagie.text.Image;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.PdfPCell;
+
+import net.bull.javamelody.PdfJavaInformationsReport.Bar;
 
 /**
  * Partie du rapport pdf pour les jobs.
@@ -108,8 +108,8 @@ class PdfJobInformationsReport extends PdfAbstractTableReport {
 		return headers;
 	}
 
-	private void writeJobInformations(JobInformations jobInformations) throws BadElementException,
-			IOException {
+	private void writeJobInformations(JobInformations jobInformations)
+			throws BadElementException, IOException {
 		final PdfPCell defaultCell = getDefaultCell();
 		defaultCell.setHorizontalAlignment(Element.ALIGN_LEFT);
 		addCell(jobInformations.getGroup());
@@ -146,8 +146,8 @@ class PdfJobInformationsReport extends PdfAbstractTableReport {
 		if (elapsedTime >= 0) {
 			final Phrase elapsedTimePhrase = new Phrase(durationFormat.format(elapsedTime),
 					cellFont);
-			final Image memoryImage = Image.getInstance(
-					Bar.toBar(100d * elapsedTime / counterRequest.getMean()), null);
+			final Image memoryImage = Image
+					.getInstance(Bar.toBar(100d * elapsedTime / counterRequest.getMean()), null);
 			memoryImage.scalePercent(47);
 			elapsedTimePhrase.add("\n");
 			elapsedTimePhrase.add(new Chunk(memoryImage, 0, 0));

@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -28,10 +28,10 @@ import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import java.util.TreeMap;
 
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletContext;
@@ -75,8 +75,8 @@ final class Parameters {
 
 	static void initialize(ServletContext context) {
 		if ("1.6".compareTo(JAVA_VERSION) > 0) {
-			throw new IllegalStateException("La version java doit être 1.6 au minimum et non "
-					+ JAVA_VERSION);
+			throw new IllegalStateException(
+					"La version java doit être 1.6 au minimum et non " + JAVA_VERSION);
 		}
 		servletContext = context;
 
@@ -168,7 +168,9 @@ final class Parameters {
 		// le fichier applications.properties contient les noms et les urls des applications à monitorer
 		// par ex.: recette=http://recette1:8080/myapp
 		// ou production=http://prod1:8080/myapp,http://prod2:8080/myapp
-		final Map<String, List<URL>> result = new LinkedHashMap<String, List<URL>>();
+		// Dans une instance de Properties, les propriétés ne sont pas ordonnées,
+		// mais elles seront ordonnées lorsqu'elles seront mises dans cette TreeMap
+		final Map<String, List<URL>> result = new TreeMap<String, List<URL>>();
 		final File file = getCollectorApplicationsFile();
 		if (file.exists()) {
 			final Properties properties = new Properties();
@@ -179,10 +181,8 @@ final class Parameters {
 				input.close();
 			}
 			@SuppressWarnings("unchecked")
-			final List<String> propertyNames = (List<String>) Collections.list(properties
-					.propertyNames());
-			// propertyNames ne sont pas ordonnés donc on les trie par ordre alphabétique
-			Collections.sort(propertyNames);
+			final List<String> propertyNames = (List<String>) Collections
+					.list(properties.propertyNames());
 			for (final String property : propertyNames) {
 				result.put(property, parseUrl(String.valueOf(properties.get(property))));
 			}
@@ -200,8 +200,8 @@ final class Parameters {
 		if (Parameters.getParameter(Parameter.TRANSPORT_FORMAT) == null) {
 			transportFormat = TransportFormat.SERIALIZED;
 		} else {
-			transportFormat = TransportFormat.valueOfIgnoreCase(Parameters
-					.getParameter(Parameter.TRANSPORT_FORMAT));
+			transportFormat = TransportFormat
+					.valueOfIgnoreCase(Parameters.getParameter(Parameter.TRANSPORT_FORMAT));
 		}
 		final String suffix = getMonitoringPath() + "?collector=stop&format="
 				+ transportFormat.getCode();
@@ -376,7 +376,7 @@ final class Parameters {
 			// api servlet 2.5 (Java EE 5) minimum pour appeler ServletContext.getContextPath
 			return context.getContextPath();
 		}
-		URL webXmlUrl;
+		final URL webXmlUrl;
 		try {
 			webXmlUrl = context.getResource("/WEB-INF/web.xml");
 		} catch (final MalformedURLException e) {
@@ -401,7 +401,8 @@ final class Parameters {
 	}
 
 	private static String getJavaMelodyVersion() {
-		final InputStream inputStream = Parameters.class.getResourceAsStream("/VERSION.properties");
+		final InputStream inputStream = Parameters.class
+				.getResourceAsStream("/JAVAMELODY-VERSION.properties");
 		if (inputStream == null) {
 			return null;
 		}

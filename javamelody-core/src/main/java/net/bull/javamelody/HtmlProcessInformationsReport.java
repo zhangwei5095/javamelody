@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -32,7 +32,8 @@ class HtmlProcessInformationsReport extends HtmlAbstractReport {
 	private final DecimalFormat percentFormat = I18N.createPercentFormat();
 	private final DecimalFormat integerFormat = I18N.createIntegerFormat();
 
-	HtmlProcessInformationsReport(List<ProcessInformations> processInformationsList, Writer writer) {
+	HtmlProcessInformationsReport(List<ProcessInformations> processInformationsList,
+			Writer writer) {
 		super(writer);
 		assert processInformationsList != null;
 

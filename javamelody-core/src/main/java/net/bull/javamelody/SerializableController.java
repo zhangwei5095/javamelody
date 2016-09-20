@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -151,8 +151,8 @@ class SerializableController { // NOPMD
 		} else if (DATABASE_PART.equalsIgnoreCase(part)) {
 			// par sécurité
 			Action.checkSystemActionsEnabled();
-			final int requestIndex = DatabaseInformations.parseRequestIndex(httpRequest
-					.getParameter(REQUEST_PARAMETER));
+			final int requestIndex = DatabaseInformations
+					.parseRequestIndex(httpRequest.getParameter(REQUEST_PARAMETER));
 			return new DatabaseInformations(requestIndex);
 		} else if (CONNECTIONS_PART.equalsIgnoreCase(part)) {
 			// par sécurité
@@ -182,8 +182,8 @@ class SerializableController { // NOPMD
 			final Collection<JRobin> jrobins = collector.getDisplayedOtherJRobins();
 			return (Serializable) convertJRobinsToImages(jrobins, range, width, height);
 		} else if (THREADS_PART.equalsIgnoreCase(part)) {
-			return new ArrayList<ThreadInformations>(javaInformationsList.get(0)
-					.getThreadInformationsList());
+			return new ArrayList<ThreadInformations>(
+					javaInformationsList.get(0).getThreadInformationsList());
 		} else if (COUNTER_SUMMARY_PER_CLASS_PART.equalsIgnoreCase(part)) {
 			final String counterName = httpRequest.getParameter(COUNTER_PARAMETER);
 			final String requestId = httpRequest.getParameter(GRAPH_PARAMETER);
@@ -275,11 +275,11 @@ class SerializableController { // NOPMD
 		return images;
 	}
 
-	Serializable createDefaultSerializable(List<JavaInformations> javaInformationsList,
-			Range range, String messageForReport) throws IOException {
+	Serializable createDefaultSerializable(List<JavaInformations> javaInformationsList, Range range,
+			String messageForReport) throws IOException {
 		final List<Counter> counters = collector.getRangeCounters(range);
-		final List<Serializable> serialized = new ArrayList<Serializable>(counters.size()
-				+ javaInformationsList.size());
+		final List<Serializable> serialized = new ArrayList<Serializable>(
+				counters.size() + javaInformationsList.size());
 		// on clone les counters avant de les sérialiser pour ne pas avoir de problèmes de concurrences d'accès
 		for (final Counter counter : counters) {
 			serialized.add(counter.clone());

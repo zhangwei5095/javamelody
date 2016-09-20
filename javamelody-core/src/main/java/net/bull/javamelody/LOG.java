@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -31,6 +31,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 final class LOG {
 	static final boolean LOG4J_ENABLED = isLog4jEnabled();
+	static final boolean LOG4J2_ENABLED = isLog4j2Enabled();
 	static final boolean LOGBACK_ENABLED = isLogbackEnabled();
 
 	static final int MAX_DEBUGGING_LOGS_COUNT = 50;
@@ -137,6 +138,17 @@ final class LOG {
 		}
 	}
 
+	private static boolean isLog4j2Enabled() {
+		try {
+			Class.forName("org.apache.logging.log4j.Logger");
+			// v2.4.1 is needed, so check ConfigurationBuilder which exists since v2.4
+			Class.forName("org.apache.logging.log4j.core.config.builder.api.ConfigurationBuilder");
+			return true;
+		} catch (final Throwable e) { // NOPMD
+			return false;
+		}
+	}
+
 	private static boolean isLogbackEnabled() {
 		try {
 			Class.forName("ch.qos.logback.classic.Logger");
@@ -145,8 +157,8 @@ final class LOG {
 			final Object obj = method.invoke(null);
 
 			// on vérifie aussi LoggerContext car il peut arriver que getILoggerFactory ne soit pas ok (jonas)
-			return Class.forName("ch.qos.logback.classic.LoggerContext").isAssignableFrom(
-					obj.getClass());
+			return Class.forName("ch.qos.logback.classic.LoggerContext")
+					.isAssignableFrom(obj.getClass());
 		} catch (final Throwable e) { // NOPMD
 			return false;
 		}
@@ -167,6 +179,8 @@ final class LOG {
 		// sinon, on prend selon ce qui est présent Logback ou Log4J ou java.util.logging
 		if (LOGBACK_ENABLED) {
 			return new LogbackLogger();
+		} else if (LOG4J2_ENABLED) {
+			return new Log4J2Logger();
 		} else if (LOG4J_ENABLED) {
 			return new Log4JLogger();
 		} else {

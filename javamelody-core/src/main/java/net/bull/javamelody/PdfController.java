@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -131,8 +131,8 @@ class PdfController {
 		} else if (PROCESSES_PART.equalsIgnoreCase(part)) {
 			doProcesses(httpResponse);
 		} else if (DATABASE_PART.equalsIgnoreCase(part)) {
-			final int index = DatabaseInformations.parseRequestIndex(httpRequest
-					.getParameter(REQUEST_PARAMETER));
+			final int index = DatabaseInformations
+					.parseRequestIndex(httpRequest.getParameter(REQUEST_PARAMETER));
 			doDatabase(httpResponse, index);
 		} else if (JNDI_PART.equalsIgnoreCase(part)) {
 			doJndi(httpResponse, httpRequest.getParameter(PATH_PARAMETER));

@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -41,6 +41,7 @@ import static net.bull.javamelody.HttpParameters.SESSION_ID_PARAMETER;
 import static net.bull.javamelody.HttpParameters.THREADS_DUMP_PART;
 import static net.bull.javamelody.HttpParameters.THREADS_PART;
 import static net.bull.javamelody.HttpParameters.THREAD_ID_PARAMETER;
+import static net.bull.javamelody.HttpParameters.TOKEN_PARAMETER;
 import static net.bull.javamelody.HttpParameters.WEB_XML_PART;
 import static net.bull.javamelody.HttpParameters.WIDTH_PARAMETER;
 
@@ -86,8 +87,10 @@ class MonitoringController {
 		JavaInformations.setWebXmlExistsAndPomXmlExists(webXmlExists, pomXmlExists);
 	}
 
-	private static final boolean GZIP_COMPRESSION_DISABLED = Boolean.parseBoolean(Parameters
-			.getParameter(Parameter.GZIP_COMPRESSION_DISABLED));
+	private static final boolean GZIP_COMPRESSION_DISABLED = Boolean
+			.parseBoolean(Parameters.getParameter(Parameter.GZIP_COMPRESSION_DISABLED));
+	private static final boolean CSRF_PROTECTION_ENABLED = Boolean
+			.parseBoolean(Parameters.getParameter(Parameter.CSRF_PROTECTION_ENABLED));
 
 	private final HttpCookieManager httpCookieManager = new HttpCookieManager();
 	private final Collector collector;
@@ -106,6 +109,9 @@ class MonitoringController {
 		assert httpRequest != null;
 		final String actionParameter = httpRequest.getParameter(ACTION_PARAMETER);
 		if (actionParameter != null) {
+			if (CSRF_PROTECTION_ENABLED) {
+				checkCsrfToken(httpRequest);
+			}
 			try {
 				// langue préférée du navigateur, getLocale ne peut être null
 				I18N.bindLocale(httpRequest.getLocale());
@@ -131,9 +137,20 @@ class MonitoringController {
 		return null;
 	}
 
-	void doActionIfNeededAndReport(HttpServletRequest httpRequest,
-			HttpServletResponse httpResponse, ServletContext servletContext) throws IOException,
-			ServletException {
+	static void checkCsrfToken(HttpServletRequest httpRequest) {
+		final String token = httpRequest.getParameter(TOKEN_PARAMETER);
+		if (token == null) {
+			throw new IllegalArgumentException("csrf token missing");
+		}
+		final HttpSession session = httpRequest.getSession(false);
+		if (session == null
+				|| !token.equals(session.getAttribute(SessionListener.CSRF_TOKEN_SESSION_NAME))) {
+			throw new IllegalArgumentException("invalid token parameter");
+		}
+	}
+
+	void doActionIfNeededAndReport(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
+			ServletContext servletContext) throws IOException, ServletException {
 		executeActionIfNeeded(httpRequest);
 
 		// javaInformations doit être réinstanciée et doit être après executeActionIfNeeded
@@ -232,6 +249,9 @@ class MonitoringController {
 
 	private void doCompressedHtml(HttpServletRequest httpRequest, HttpServletResponse httpResponse,
 			List<JavaInformations> javaInformationsList) throws IOException {
+		if (CSRF_PROTECTION_ENABLED && SessionListener.getCurrentSession() == null) {
+			SessionListener.bindSession(httpRequest.getSession());
+		}
 		final HtmlController htmlController = new HtmlController(collector, collectorServer,
 				messageForReport, anchorNameForRedirect);
 		// on teste CompressionServletResponseWrapper car il peut déjà être mis dans le serveur de collecte
@@ -377,7 +397,8 @@ class MonitoringController {
 	}
 
 	// part=lastValue&graph=x,y,z sera utilisé par munin notamment
-	private void doLastValue(HttpServletResponse httpResponse, String graphName) throws IOException {
+	private void doLastValue(HttpServletResponse httpResponse, String graphName)
+			throws IOException {
 		httpResponse.setContentType("text/plain");
 		boolean first = true;
 		for (final String graph : graphName.split(",")) {
@@ -439,8 +460,8 @@ class MonitoringController {
 	}
 
 	private static InputStream getWebXmlAsStream() {
-		final InputStream webXml = Parameters.getServletContext().getResourceAsStream(
-				"/WEB-INF/web.xml");
+		final InputStream webXml = Parameters.getServletContext()
+				.getResourceAsStream("/WEB-INF/web.xml");
 		if (webXml == null) {
 			return null;
 		}
@@ -452,13 +473,13 @@ class MonitoringController {
 		if (mavenDir == null || mavenDir.isEmpty()) {
 			return null;
 		}
-		final Set<?> groupDir = Parameters.getServletContext().getResourcePaths(
-				(String) mavenDir.iterator().next());
+		final Set<?> groupDir = Parameters.getServletContext()
+				.getResourcePaths((String) mavenDir.iterator().next());
 		if (groupDir == null || groupDir.isEmpty()) {
 			return null;
 		}
-		final InputStream pomXml = Parameters.getServletContext().getResourceAsStream(
-				groupDir.iterator().next() + "pom.xml");
+		final InputStream pomXml = Parameters.getServletContext()
+				.getResourceAsStream(groupDir.iterator().next() + "pom.xml");
 		if (pomXml == null) {
 			return null;
 		}
@@ -476,8 +497,8 @@ class MonitoringController {
 	}
 
 	private static void doCustomReport(HttpServletRequest httpRequest,
-			HttpServletResponse httpResponse, String reportName) throws ServletException,
-			IOException {
+			HttpServletResponse httpResponse, String reportName)
+			throws ServletException, IOException {
 		final String customReportPath = Parameters.getParameterByName(reportName);
 		if (customReportPath.length() > 0 && customReportPath.charAt(0) == '/'
 				&& Parameters.getServletContext().getRequestDispatcher(customReportPath) != null) {
@@ -491,8 +512,8 @@ class MonitoringController {
 	static boolean isCompressionSupported(HttpServletRequest httpRequest) {
 		// est-ce que le navigateur déclare accepter la compression gzip ?
 		boolean supportCompression = false;
-		final List<String> acceptEncodings = Collections.list(httpRequest
-				.getHeaders("Accept-Encoding"));
+		final List<String> acceptEncodings = Collections
+				.list(httpRequest.getHeaders("Accept-Encoding"));
 		for (final String name : acceptEncodings) {
 			if (name.contains("gzip")) {
 				supportCompression = true;
@@ -506,12 +527,13 @@ class MonitoringController {
 		return httpRequest.getParameter(RESOURCE_PARAMETER) == null
 				&& httpRequest.getParameter(GRAPH_PARAMETER) == null
 				&& (httpRequest.getParameter(PART_PARAMETER) == null
-						|| CURRENT_REQUESTS_PART.equalsIgnoreCase(httpRequest
-								.getParameter(PART_PARAMETER))
-						|| DEFAULT_WITH_CURRENT_REQUESTS_PART.equalsIgnoreCase(httpRequest
-								.getParameter(PART_PARAMETER))
+						|| CURRENT_REQUESTS_PART
+								.equalsIgnoreCase(httpRequest.getParameter(PART_PARAMETER))
+						|| DEFAULT_WITH_CURRENT_REQUESTS_PART
+								.equalsIgnoreCase(httpRequest.getParameter(PART_PARAMETER))
 						|| JVM_PART.equalsIgnoreCase(httpRequest.getParameter(PART_PARAMETER))
-						|| THREADS_PART.equalsIgnoreCase(httpRequest.getParameter(PART_PARAMETER)) || THREADS_DUMP_PART
-							.equalsIgnoreCase(httpRequest.getParameter(PART_PARAMETER)));
+						|| THREADS_PART.equalsIgnoreCase(httpRequest.getParameter(PART_PARAMETER))
+						|| THREADS_DUMP_PART
+								.equalsIgnoreCase(httpRequest.getParameter(PART_PARAMETER)));
 	}
 }

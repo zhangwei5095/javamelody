@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.bull.javamelody</groupId>
 	<artifactId>javamelody-core</artifactId>
-	<version>1.58.0-SNAPSHOT</version>
+	<version>1.62.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>JavaMelody - Core</name>
 	<description>Monitoring of JavaEE applications</description>
@@ -96,6 +96,12 @@
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>1.2.16</version>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>2.5</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
@@ -220,6 +226,25 @@
 			<artifactId>hibernate-core</artifactId>
 			<version>3.6.9.Final</version>
 			<optional>true</optional>
+			<exclusions>
+				<exclusion>
+					<artifactId>hibernate-jpa-2.0-api</artifactId>
+					<groupId>org.hibernate.javax.persistence</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.1-api</artifactId>
+			<version>1.0.0.Final</version>
+			<optional>true</optional>
+		</dependency>
+		<!-- Dépendance optionnelle mongodb-driver -->
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongodb-driver</artifactId>
+			<version>3.3.0</version>
+			<optional>true</optional>
 		</dependency>
 		<!-- Dépendance JUnit -->
 		<dependency>
@@ -256,13 +281,10 @@
 	</dependencies>
 
 	<distributionManagement>
-		<!-- "mvn release:prepare release:perform" veut -SNAPSHOT et cherche svn, 
-			mais si tout est ok et sans -SNAPSHOT alors "mvn clean deploy" suffit, https://maven2-repository.dev.java.net/ 
-			http://wiki.jenkins-ci.org/display/JENKINS/Hosting+Plugins -->
 		<repository>
 			<uniqueVersion>false</uniqueVersion>
 			<id>maven.jenkins-ci.org</id>
-			<url>http://maven.jenkins-ci.org:8081/content/repositories/releases/</url>
+			<url>https://repo.jenkins-ci.org/releases/</url>
 		</repository>
 		<snapshotRepository>
 			<!-- prevent accidental deployment of SNAPSHOTS to repository -->
@@ -280,14 +302,14 @@
 			<resource>
 				<directory>${project.basedir}/src/main/resources</directory>
 			</resource>
-			<!-- uniquement pour inclure les fichiers de licence et user_guide dans 
-				le jar produit par maven (celui qui contient pom.properties et pom.xml avec 
+			<!-- uniquement pour inclure les fichiers de licence et user_guide dans
+				le jar produit par maven (celui qui contient pom.properties et pom.xml avec
 				la version) -->
 			<resource>
 				<directory>${project.basedir}</directory>
 				<includes>
 					<include>LICENSE</include>
-					<include>VERSION.properties</include>
+					<include>JAVAMELODY-VERSION.properties</include>
 				</includes>
 			</resource>
 		</resources>
@@ -295,7 +317,7 @@
 			<!-- Configuration compilation -->
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.3</version>
+				<version>3.5</version>
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>
@@ -307,7 +329,7 @@
 					<testCompilerArgument>-XDignore.symbol.file=true -Xlint</testCompilerArgument>
 				</configuration>
 			</plugin>
-			<!-- pour produire un jar lors du goal package comme celui produit par 
+			<!-- pour produire un jar lors du goal package comme celui produit par
 				ant mais avec pom.properties et pom.xml pour publication dans un repository -->
 			<plugin>
 				<artifactId>maven-jar-plugin</artifactId>
@@ -355,13 +377,13 @@
 						<phase>prepare-package</phase>
 						<configuration>
 							<target>
-								<!-- écrit la version du pom dans VERSION.properties -->
-								<echo message="# Version of JavaMelody${line.separator}" file="VERSION.properties" />
-								<echo message="version=${project.version}" append="true" file="VERSION.properties" />
+								<!-- écrit la version du pom dans JAVAMELODY-VERSION.properties -->
+								<echo message="# Version of JavaMelody${line.separator}" file="JAVAMELODY-VERSION.properties" />
+								<echo message="version=${project.version}" append="true" file="JAVAMELODY-VERSION.properties" />
 								<!-- avec antrun 1.7, CR ne peut être écrit en même temps que LF -->
-								<echo message="&#xD;" append="true" file="VERSION.properties" />
-								<echo message="&#xA;" append="true" file="VERSION.properties" />
-								<copy file="VERSION.properties" tofile="target/classes/VERSION.properties" />
+								<echo message="&#xD;" append="true" file="JAVAMELODY-VERSION.properties" />
+								<echo message="&#xA;" append="true" file="JAVAMELODY-VERSION.properties" />
+								<copy file="JAVAMELODY-VERSION.properties" tofile="target/classes/JAVAMELODY-VERSION.properties" />
 
 								<!-- appel de Ant et copie du résultat dans le site -->
 								<!-- On n'appelle plus Ant pour mettre les artefacts dans le site
@@ -466,7 +488,7 @@
 						<!-- Vérification des règles de codage -->
 						<plugin>
 							<artifactId>maven-checkstyle-plugin</artifactId>
-							<version>2.16</version>
+							<version>2.17</version>
 							<configuration>
 								<enableRSS>false</enableRSS>
 								<configLocation>${basedir}/.checkstyle.xml</configLocation>
@@ -476,7 +498,7 @@
 						<plugin>
 							<groupId>org.codehaus.mojo</groupId>
 							<artifactId>findbugs-maven-plugin</artifactId>
-							<version>3.0.2</version>
+							<version>3.0.3</version>
 							<configuration>
 								<xmlOutput>true</xmlOutput>
 								<omitVisitors>DefaultEncodingDetector</omitVisitors>
@@ -484,7 +506,7 @@
 						</plugin>
 						<plugin>
 							<artifactId>maven-pmd-plugin</artifactId>
-							<version>3.5</version>
+							<version>3.6</version>
 							<configuration>
 								<enableRulesSummary>false</enableRulesSummary>
 								<source>1.6</source>
@@ -546,7 +568,7 @@
 						<!-- Information sur le projet -->
 						<plugin>
 							<artifactId>maven-project-info-reports-plugin</artifactId>
-							<version>2.8</version>
+							<version>2.8.1</version>
 							<reportSets>
 								<reportSet>
 									<reports>

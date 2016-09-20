@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -109,8 +109,8 @@ abstract class CounterRequestAbstractPanel extends MelodyPanel {
 				@Override
 				public void valueChanged(ListSelectionEvent e) {
 					final CounterRequest counterRequest = getTable().getSelectedObject();
-					usagesButton.setEnabled(counterRequest != null
-							&& doesRequestDisplayUsages(counterRequest));
+					usagesButton.setEnabled(
+							counterRequest != null && doesRequestDisplayUsages(counterRequest));
 				}
 			});
 			usagesButton.setEnabled(false);

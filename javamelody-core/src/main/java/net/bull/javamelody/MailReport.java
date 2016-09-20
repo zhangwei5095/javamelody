@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -145,8 +145,7 @@ class MailReport {
 			}
 
 			final String subject = I18N.getFormattedString("Monitoring_sur",
-					collector.getApplication())
-					+ " - " + period.getLabel();
+					collector.getApplication()) + " - " + period.getLabel();
 			final Mailer mailer = new Mailer(Parameters.getParameter(Parameter.MAIL_SESSION));
 			final String adminEmails = Parameters.getParameter(Parameter.ADMIN_EMAILS);
 			mailer.send(adminEmails, subject, "", Collections.singletonList(tmpFile), false);

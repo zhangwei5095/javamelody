@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -151,10 +151,12 @@ class PdfThreadInformationsReport extends PdfAbstractTableReport {
 		addCell(integerFormat.format(threadInformations.getPriority()));
 		defaultCell.setHorizontalAlignment(Element.ALIGN_LEFT);
 		final PdfPCell cell = new PdfPCell();
-		final Paragraph paragraph = new Paragraph(getDefaultCell().getLeading()
-				+ cellFont.getSize());
-		paragraph.add(new Chunk(getImage("bullets/"
-				+ HtmlThreadInformationsReport.getStateIcon(threadInformations)), 0, -1));
+		final Paragraph paragraph = new Paragraph(
+				getDefaultCell().getLeading() + cellFont.getSize());
+		paragraph.add(new Chunk(
+				getImage(
+						"bullets/" + HtmlThreadInformationsReport.getStateIcon(threadInformations)),
+				0, -1));
 		paragraph.add(new Phrase(String.valueOf(threadInformations.getState()), cellFont));
 		cell.addElement(paragraph);
 		addCell(cell);

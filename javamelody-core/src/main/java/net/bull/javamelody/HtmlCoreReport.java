@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -110,7 +110,7 @@ class HtmlCoreReport extends HtmlAbstractReport {
 				writeln(" class='noPrint'><img src='?resource=action_add.png' alt='#add_application#'/> #add_application#</a>");
 				writeln(separator);
 				writeln("<a href='?action=remove_application&amp;application=" + currentApplication
-						+ "' class='noPrint' ");
+						+ getCsrfTokenUrlPart() + "' class='noPrint' ");
 				final String messageConfirmation = getFormattedString("confirm_remove_application",
 						currentApplication);
 				writeln("onclick=\"javascript:return confirm('"
@@ -195,7 +195,8 @@ class HtmlCoreReport extends HtmlAbstractReport {
 			writeAnchor("currentRequests", I18N.getString("Requetes_en_cours"));
 			writeln("#Requetes_en_cours#</h3>");
 			// si on n'est pas sur le serveur de collecte il n'y a qu'un javaInformations
-			writeCurrentRequests(javaInformationsList.get(0), counters, counterReportsByCounterName);
+			writeCurrentRequests(javaInformationsList.get(0), counters,
+					counterReportsByCounterName);
 		}
 
 		writeln("<h3 class='chapterTitle'><img src='?resource=systeminfo.png' alt='#Informations_systemes#'/>");
@@ -248,8 +249,8 @@ class HtmlCoreReport extends HtmlAbstractReport {
 	private void writeSummary() throws IOException {
 		final String javaMelodyUrl = "<a href='https://github.com/javamelody/javamelody/wiki' target='_blank'>JavaMelody</a>";
 		if (range.getPeriod() == Period.TOUT) {
-			final String startDate = I18N.createDateAndTimeFormat().format(
-					collector.getCounters().get(0).getStartDate());
+			final String startDate = I18N.createDateAndTimeFormat()
+					.format(collector.getCounters().get(0).getStartDate());
 			writeDirectly(getFormattedString("Statistiques", javaMelodyUrl,
 					I18N.getCurrentDateAndTime(), startDate, collector.getApplication()));
 		} else {
@@ -257,8 +258,8 @@ class HtmlCoreReport extends HtmlAbstractReport {
 					I18N.getCurrentDateAndTime(), collector.getApplication()));
 		}
 		if (javaInformationsList.get(0).getContextDisplayName() != null) {
-			writeDirectly(htmlEncodeButNotSpace(" ("
-					+ javaInformationsList.get(0).getContextDisplayName() + ')'));
+			writeDirectly(htmlEncodeButNotSpace(
+					" (" + javaInformationsList.get(0).getContextDisplayName() + ')'));
 		}
 		writeln("");
 	}
@@ -307,15 +308,16 @@ class HtmlCoreReport extends HtmlAbstractReport {
 			}
 		}
 		if (SessionListener.getCurrentSession() != null) {
-			writeDirectly("    <div class='menuButton'><a href='?action=logout'>"
-					+ I18N.getString("logout") + "</a></div>");
+			writeDirectly("    <div class='menuButton'><a href='?action=logout"
+					+ getCsrfTokenUrlPart() + "'>" + I18N.getString("logout") + "</a></div>");
 			writeln("");
 		}
 		writeln("  </div></div>");
 		writeln("</div></div>");
 	}
 
-	private Map<String, HtmlCounterReport> writeCounters(List<Counter> counters) throws IOException {
+	private Map<String, HtmlCounterReport> writeCounters(List<Counter> counters)
+			throws IOException {
 		final Map<String, HtmlCounterReport> counterReportsByCounterName = new HashMap<String, HtmlCounterReport>();
 		for (final Counter counter : counters) {
 			final HtmlCounterReport htmlCounterReport = writeCounter(counter);
@@ -324,7 +326,8 @@ class HtmlCoreReport extends HtmlAbstractReport {
 
 		if (range.getPeriod() == Period.TOUT && counterReportsByCounterName.size() > 1) {
 			writeln("<div align='right'>");
-			writeln("<a href='?action=clear_counter&amp;counter=all' title='#Vider_toutes_stats#'");
+			writeln("<a href='?action=clear_counter&amp;counter=all" + getCsrfTokenUrlPart()
+					+ "' title='#Vider_toutes_stats#'");
 			writeln("class='noPrint' onclick=\"javascript:return confirm('"
 					+ getStringForJavascript("confirm_vider_toutes_stats")
 					+ "');\">#Reinitialiser_toutes_stats#</a>");
@@ -345,8 +348,8 @@ class HtmlCoreReport extends HtmlAbstractReport {
 	private void writeCounterTitle(Counter counter) throws IOException {
 		writeln("<h3 class='chapterTitle'><img src='?resource=" + counter.getIconName() + "' alt='"
 				+ counter.getName() + "'/>");
-		writeAnchor(counter.getName(), I18N.getString("Stats") + ' '
-				+ counter.getName().toLowerCase(Locale.ENGLISH));
+		writeAnchor(counter.getName(),
+				I18N.getString("Stats") + ' ' + counter.getName().toLowerCase(Locale.ENGLISH));
 		final String counterLabel = getString(counter.getName() + "Label");
 		write(getFormattedString("Statistiques_compteur", counterLabel));
 		writeln(" - " + range.getLabel() + "</h3>");
@@ -357,12 +360,12 @@ class HtmlCoreReport extends HtmlAbstractReport {
 		new HtmlForms(writer).writeAddAndRemoveApplicationLinks(currentApplication);
 	}
 
-	void writeMessageIfNotNull(String message, String partToRedirectTo, String anchorNameForRedirect)
-			throws IOException {
+	void writeMessageIfNotNull(String message, String partToRedirectTo,
+			String anchorNameForRedirect) throws IOException {
 		if (message != null) {
 			writeln(SCRIPT_BEGIN);
 			// writeDirectly pour ne pas gérer de traductions si le message contient '#'
-			writeDirectly("alert(\"" + javascriptEncode(message) + "\");");
+			writeDirectly("alert(\"" + htmlEncodeButNotSpace(javascriptEncode(message)) + "\");");
 			writeln("");
 			// redirect vers une url évitant que F5 du navigateur ne refasse l'action au lieu de faire un refresh
 			if (partToRedirectTo == null) {
@@ -370,8 +373,9 @@ class HtmlCoreReport extends HtmlAbstractReport {
 					writeln("location.href = '?'");
 				} else {
 					writeln("if (location.href.indexOf('?') != -1) {");
-					writeDirectly("location.href = location.href.substring(0, location.href.indexOf('?')) + '#"
-							+ anchorNameForRedirect + "';");
+					writeDirectly(
+							"location.href = location.href.substring(0, location.href.indexOf('?')) + '#"
+									+ anchorNameForRedirect + "';");
 					writeln("} else {");
 					writeDirectly("location.href = '#" + anchorNameForRedirect + "';");
 					writeln("}");
@@ -681,17 +685,19 @@ class HtmlCoreReport extends HtmlAbstractReport {
 		final String separator = "&nbsp;&nbsp;&nbsp;&nbsp;";
 		final String endOfOnClickConfirm = "');\">";
 		if (isGcEnabled()) {
-			write("<a href='?action=gc' onclick=\"javascript:return confirm('"
+			write("<a href='?action=gc" + getCsrfTokenUrlPart()
+					+ "' onclick=\"javascript:return confirm('"
 					+ getStringForJavascript("confirm_ramasse_miette") + endOfOnClickConfirm);
 			write("<img src='?resource=broom.png' width='20' height='20' alt='#ramasse_miette#' /> #ramasse_miette#</a>");
 			writeln(separator);
 		} else {
-			write("<a href='?action=gc' onclick=\"javascript:alert('"
+			write("<a href='?action=gc" + getCsrfTokenUrlPart() + "' onclick=\"javascript:alert('"
 					+ getStringForJavascript("ramasse_miette_desactive") + "');return false;\">");
 			write("<img src='?resource=broom.png' width='20' height='20' alt='#ramasse_miette#' /> #ramasse_miette#</a>");
 			writeln(separator);
 		}
-		write("<a href='?action=heap_dump' onclick=\"javascript:return confirm('"
+		write("<a href='?action=heap_dump" + getCsrfTokenUrlPart()
+				+ "' onclick=\"javascript:return confirm('"
 				+ getStringForJavascript("confirm_heap_dump") + endOfOnClickConfirm);
 		write("<img src='?resource=heapdump.png' width='20' height='20' alt=\"#heap_dump#\" /> #heap_dump#</a>");
 		writeln(separator);
@@ -701,7 +707,8 @@ class HtmlCoreReport extends HtmlAbstractReport {
 			writeln(separator);
 		}
 		if (isSessionsEnabled()) {
-			write("<a href='?action=invalidate_sessions' onclick=\"javascript:return confirm('"
+			write("<a href='?action=invalidate_sessions" + getCsrfTokenUrlPart()
+					+ "' onclick=\"javascript:return confirm('"
 					+ getStringForJavascript("confirm_invalidate_sessions") + endOfOnClickConfirm);
 			write("<img src='?resource=user-trash.png' width='18' height='18' alt=\"#invalidate_sessions#\" /> #invalidate_sessions#</a>");
 			writeln(separator);
@@ -851,7 +858,8 @@ class HtmlCoreReport extends HtmlAbstractReport {
 				write("<a href='?part=" + part + graphParameter + urlEncode(graphName)
 						+ "&amp;period=" + myPeriod.getCode() + "' ");
 			}
-			write("title='" + getFormattedString("Choisir_periode", myPeriod.getLinkLabel()) + "'>");
+			write("title='" + getFormattedString("Choisir_periode", myPeriod.getLinkLabel())
+					+ "'>");
 			write("<img src='?resource=" + myPeriod.getIconName() + "' alt='"
 					+ myPeriod.getLinkLabel() + "' /> ");
 			writeln(myPeriod.getLinkLabel() + "</a>&nbsp;");
@@ -871,7 +879,8 @@ class HtmlCoreReport extends HtmlAbstractReport {
 				+ (collector.getEstimatedMemorySize() / 1024 / 1024 + 1) + " #Mo#");
 		writeln("<br/>#Usage_disque#: " + (collector.getDiskUsage() / 1024 / 1024 + 1) + " #Mo#");
 		if (Parameters.isSystemActionsEnabled()) {
-			writeln("&nbsp;&nbsp;&nbsp;<a href='?action=purge_obsolete_files' class='noPrint'>");
+			writeln("&nbsp;&nbsp;&nbsp;<a href='?action=purge_obsolete_files"
+					+ getCsrfTokenUrlPart() + "' class='noPrint'>");
 			writeln("<img width='14' height='14' src='?resource=user-trash.png' alt='#Purger_les_fichiers_obsoletes#' title='#Purger_les_fichiers_obsoletes#'/></a>");
 		}
 		if (Parameters.JAVAMELODY_VERSION != null) {

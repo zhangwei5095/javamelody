@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -64,7 +64,7 @@ class JnlpPage {
 		final Map<String, Object> properties = new LinkedHashMap<String, Object>();
 		properties.put("javamelody.application", collector.getApplication());
 		properties.put("javamelody.collectorServer", collectorServer != null);
-		String url;
+		final String url;
 		if (collectorServer == null) {
 			url = codebase + "?format=serialized";
 		} else {

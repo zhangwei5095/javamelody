@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -19,6 +19,9 @@ package net.bull.javamelody;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.security.SecureRandom;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * Parent abstrait des classes de rapport html.
@@ -26,6 +29,8 @@ import java.io.Writer;
  */
 abstract class HtmlAbstractReport {
 	private static final boolean PDF_ENABLED = computePdfEnabled();
+	private static final boolean CSRF_PROTECTION_ENABLED = Boolean
+			.parseBoolean(Parameters.getParameter(Parameter.CSRF_PROTECTION_ENABLED));
 	private final Writer writer;
 
 	class HtmlTable {
@@ -46,9 +51,11 @@ abstract class HtmlAbstractReport {
 				writeDirectly("</thead><tbody>\n");
 			}
 			if (oddRow) {
-				writeDirectly("<tr class='odd' onmouseover=\"this.className='highlight'\" onmouseout=\"this.className='odd'\">\n");
+				writeDirectly(
+						"<tr class='odd' onmouseover=\"this.className='highlight'\" onmouseout=\"this.className='odd'\">\n");
 			} else {
-				writeDirectly("<tr onmouseover=\"this.className='highlight'\" onmouseout=\"this.className=''\">\n");
+				writeDirectly(
+						"<tr onmouseover=\"this.className='highlight'\" onmouseout=\"this.className=''\">\n");
 			}
 			oddRow = !oddRow; // NOPMD
 		}
@@ -176,6 +183,22 @@ abstract class HtmlAbstractReport {
 	 */
 	static String htmlEncodeButNotSpace(String text) {
 		return I18N.htmlEncode(text, false);
+	}
+
+	static String getCsrfTokenUrlPart() {
+		if (CSRF_PROTECTION_ENABLED) {
+			final HttpSession currentSession = SessionListener.getCurrentSession();
+			String csrfToken = (String) currentSession
+					.getAttribute(SessionListener.CSRF_TOKEN_SESSION_NAME);
+			if (csrfToken == null) {
+				final byte[] bytes = new byte[16];
+				new SecureRandom().nextBytes(bytes);
+				csrfToken = new String(Base64Coder.encode(bytes));
+				currentSession.setAttribute(SessionListener.CSRF_TOKEN_SESSION_NAME, csrfToken);
+			}
+			return "&amp;" + HttpParameters.TOKEN_PARAMETER + '=' + csrfToken;
+		}
+		return "";
 	}
 
 	static boolean isPdfEnabled() {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -40,6 +40,7 @@ public class LoggingHandler extends Handler {
 	// faite par le filtre. Il suffirait dans ce cas de déclarer LoggingHandler (ou Log4JAppender) dans le fichier
 	// logging.properties (ou log4j.xml/log4j.properties) utilisé pour obtenir le même counter statique.
 	private static final Counter LOG_COUNTER = new Counter(Counter.LOG_COUNTER_NAME, "log.png");
+
 	static { // bloc d'initialisation statique
 		LOG_COUNTER.setMaxRequestsCount(500);
 	}

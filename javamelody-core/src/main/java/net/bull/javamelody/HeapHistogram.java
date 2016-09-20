@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -210,6 +210,7 @@ class HeapHistogram implements Serializable {
 	static class ClassInfo implements Serializable {
 		private static final long serialVersionUID = 6283636454450216347L;
 		private static Map<Character, String> arrayTypes = new HashMap<Character, String>();
+
 		static {
 			arrayTypes.put('Z', "boolean");
 			arrayTypes.put('C', "char");

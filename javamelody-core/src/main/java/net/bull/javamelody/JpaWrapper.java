@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -28,27 +28,51 @@ import javax.persistence.Query;
  * Cette classe est utile pour construire des proxy pour JPA.
  * @author Emeric Vernat
  */
-final class JpaWrapper {
-	private static final boolean DISABLED = Boolean.parseBoolean(Parameters
-			.getParameter(Parameter.DISABLED));
+public final class JpaWrapper {
+	static final JpaNamingStrategy JPA_NAMING_STRATEGY;
+	private static final boolean DISABLED = Boolean
+			.parseBoolean(Parameters.getParameter(Parameter.DISABLED));
 	private static final Counter JPA_COUNTER = MonitoringProxy.getJpaCounter();
 
 	private JpaWrapper() {
 		super();
 	}
 
+	static {
+		JPA_NAMING_STRATEGY = createNamingStrategy();
+	}
+
+	private static JpaNamingStrategy createNamingStrategy() {
+		final String implClassName = Parameters.getParameter(Parameter.JPA_NAMING_STRATEGY);
+		if (implClassName == null || implClassName.trim().isEmpty()) {
+			return new JpaDefaultNamingStrategy();
+		}
+
+		try {
+			return (JpaNamingStrategy) Class.forName(implClassName).getConstructor().newInstance();
+		} catch (final Exception e) {
+			throw new IllegalStateException("Could not instantiate class: " + implClassName
+					+ " defined in parameter: " + Parameter.JPA_NAMING_STRATEGY.getCode(), e);
+		}
+	}
+
 	static Counter getJpaCounter() {
 		return JPA_COUNTER;
 	}
 
-	static EntityManagerFactory createEntityManagerFactoryProxy(
+	/**
+	 * Create proxy of EntityManagerFactory.
+	 * @param entityManagerFactory EntityManagerFactory
+	 * @return EntityManagerFactory
+	 */
+	public static EntityManagerFactory createEntityManagerFactoryProxy(
 			final EntityManagerFactory entityManagerFactory) {
 		if (DISABLED || !JPA_COUNTER.isDisplayed()) {
 			return entityManagerFactory;
 		}
 		// on veut monitorer seulement les EntityManager retournés par les deux méthodes createEntityManager
-		return JdbcWrapper.createProxy(entityManagerFactory, new EntityManagerFactoryHandler(
-				entityManagerFactory));
+		return JdbcWrapper.createProxy(entityManagerFactory,
+				new EntityManagerFactoryHandler(entityManagerFactory));
 	}
 
 	static EntityManager createEntityManagerProxy(final EntityManager entityManager) {
@@ -87,7 +111,6 @@ final class JpaWrapper {
 			this.entityManagerFactory = entityManagerFactory;
 		}
 
-		/** {@inheritDoc} */
 		@Override
 		public Object invoke(final Object proxy, final Method method, final Object[] args)
 				throws Throwable {
@@ -107,79 +130,31 @@ final class JpaWrapper {
 			this.entityManager = entityManager;
 		}
 
-		/** {@inheritDoc} */
 		@Override
 		public Object invoke(final Object proxy, final Method method, final Object[] args)
 				throws Throwable {
-			final String methodName = method.getName();
-			if (isCreateSomeQuery(method)) {
+			final JpaMethod jpaMethod = JpaMethod.forCall(method, args);
+			assert jpaMethod != null;
+			assert method != null;
+
+			if (jpaMethod.isQuery() && jpaMethod.isMonitored()) {
 				Query query = (Query) method.invoke(entityManager, args);
-				// (pas besoin de proxy pour getCriteriaBuilder() car cela repasse par entityManager.createQuery(criteriaQuery)
-				final String requestName = getQueryRequestName(methodName, args);
+				final String requestName = getRequestName(jpaMethod, method, args);
 				query = createQueryProxy(query, requestName);
 				return query;
-			} else if (isOneOfFindMethods(args, methodName)) {
-				final String requestName = "find(" + ((Class<?>) args[0]).getSimpleName() + ')';
-				return doInvoke(entityManager, method, args, requestName);
-			} else if (isMergePersistRefreshRemoveDetachOrLockMethod(methodName, args)) {
-				final String requestName = method.getName() + '('
-						+ args[0].getClass().getSimpleName() + ')';
-				return doInvoke(entityManager, method, args, requestName);
-			} else if ("flush".equals(methodName)) {
-				final String requestName = "flush()";
+			}
+			if (jpaMethod.isMonitored()) {
+				final String requestName = getRequestName(jpaMethod, method, args);
 				return doInvoke(entityManager, method, args, requestName);
 			}
 			return method.invoke(entityManager, args);
 		}
 
-		private boolean isMergePersistRefreshRemoveDetachOrLockMethod(String methodName,
-				Object[] args) {
-			return args != null
-					&& args.length > 0
-					&& ("merge".equals(methodName) || "persist".equals(methodName)
-							|| "refresh".equals(methodName) || "remove".equals(methodName)
-							|| "detach".equals(methodName) || "lock".equals(methodName));
-		}
-
-		private boolean isOneOfFindMethods(Object[] args, String methodName) {
-			return "find".equals(methodName) && args != null && args.length > 0
-					&& args[0] instanceof Class;
-		}
-
-		private boolean isCreateSomeQuery(Method method) {
-			final String methodName = method.getName();
-			final Class<?> returnType = method.getReturnType();
-			final boolean methodNameOk = "createQuery".equals(methodName)
-					|| "createNamedQuery".equals(methodName)
-					|| "createNativeQuery".equals(methodName)
-					// JavaEE 7:
-					|| "createStoredProcedureQuery".equals(methodName)
-					|| "createNamedStoredProcedureQuery".equals(methodName);
-			return methodNameOk && returnType != null && Query.class.isAssignableFrom(returnType);
-		}
-
-		private String getQueryRequestName(String methodName, Object[] args) {
-			final StringBuilder requestName = new StringBuilder();
-			requestName.append(methodName, "create".length(), methodName.length());
-			appendArgs(requestName, args);
-			return requestName.toString();
-		}
-
-		private static void appendArgs(StringBuilder requestName, Object[] args) {
-			requestName.append('(');
-			if (args != null) {
-				String separator = "";
-				for (final Object arg : args) {
-					requestName.append(separator);
-					separator = ", ";
-					if (arg instanceof Class) {
-						requestName.append(((Class<?>) arg).getSimpleName());
-					} else {
-						requestName.append(arg);
-					}
-				}
-			}
-			requestName.append(')');
+		private String getRequestName(final JpaMethod jpaMethod, final Method method,
+				final Object[] args) {
+			final String requestName = JPA_NAMING_STRATEGY.getRequestName(jpaMethod, method, args);
+			assert requestName != null;
+			return requestName;
 		}
 	}
 
@@ -193,13 +168,12 @@ final class JpaWrapper {
 			this.requestName = requestName;
 		}
 
-		/** {@inheritDoc} */
 		@Override
 		public Object invoke(final Object proxy, final Method method, final Object[] args)
 				throws Throwable {
 			final String methodName = method.getName();
-			if (("getSingleResult".equals(methodName) || "getResultList".equals(methodName) || "executeUpdate"
-					.equals(methodName)) && (args == null || args.length == 0)) {
+			if (("getSingleResult".equals(methodName) || "getResultList".equals(methodName)
+					|| "executeUpdate".equals(methodName)) && (args == null || args.length == 0)) {
 				return doInvoke(query, method, args, requestName);
 			} else if (methodName.startsWith("set") && method.getReturnType() != null
 					&& Query.class.isAssignableFrom(method.getReturnType())) {

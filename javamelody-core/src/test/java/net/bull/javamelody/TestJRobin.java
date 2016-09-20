@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -57,8 +57,8 @@ public class TestJRobin {
 	@Test
 	public void test() throws IOException {
 		final Range range = Period.JOUR.getRange();
-		final Range customRange = Range.createCustomRange(new Date(System.currentTimeMillis() - 24L
-				* 60 * 60 * 1000), new Date());
+		final Range customRange = Range.createCustomRange(
+				new Date(System.currentTimeMillis() - 24L * 60 * 60 * 1000), new Date());
 		final JRobin jrobin = JRobin.createInstance(TEST_APPLICATION, "id",
 				"requête très très très très très très longue");
 		jrobin.graph(range, 500, 200);

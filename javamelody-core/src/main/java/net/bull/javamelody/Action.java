@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -33,11 +33,11 @@ import javax.management.ObjectInstance;
 import javax.management.ObjectName;
 import javax.servlet.http.HttpSession;
 
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.CacheManager;
-
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
+
+import net.sf.ehcache.Cache;
+import net.sf.ehcache.CacheManager;
 
 /**
  * Énumération des actions possibles dans l'IHM.
@@ -45,61 +45,46 @@ import org.quartz.Scheduler;
  * @author <a href="mailto:davidkarlsen@gmail.com">David J. M. Karlsen (IBM heapdump support)<a>
  */
 enum Action { // NOPMD
-	/**
-	 * Test d'envoi du rapport pdf par mail.
-	 */
+	/** Test d'envoi du rapport pdf par mail. */
 	MAIL_TEST(""),
-	/**
-	 * Réinitialisation d'un compteur non périodique.
-	 */
+
+	/** Réinitialisation d'un compteur non périodique. */
 	CLEAR_COUNTER("http"),
-	/**
-	 * Garbage Collect.
-	 */
+
+	/** Garbage Collect. */
 	GC("systeminfo"),
-	/**
-	 * Invalidations des sessions http.
-	 */
+
+	/** Invalidations des sessions http. */
 	INVALIDATE_SESSIONS("systeminfo"),
-	/**
-	 * Invalidation d'une session http.
-	 */
+
+	/** Invalidation d'une session http. */
 	INVALIDATE_SESSION(""),
-	/**
-	 * Invalidation de la session http courante.
-	 */
+
+	/** Invalidation de la session http courante. */
 	LOGOUT(""),
-	/**
-	 * Heap dump.
-	 */
+
+	/** Heap dump. */
 	HEAP_DUMP("systeminfo"),
-	/**
-	 * Purge le contenu de tous les caches (ie, for ALL_CACHE_MANAGERS {cacheManager.clearAll()})
-	 */
+
+	/** Purge le contenu de tous les caches (ie, for ALL_CACHE_MANAGERS {cacheManager.clearAll()}). */
 	CLEAR_CACHES("caches"),
-	/**
-	 * Purge le contenu  d'un cache
-	 */
+
+	/** Purge le contenu  d'un cache. */
 	CLEAR_CACHE("caches"),
-	/**
-	 * Tue un thread java.
-	 */
+
+	/** Tue un thread java. */
 	KILL_THREAD("threads"),
-	/**
-	 * Met un job quartz en pause.
-	 */
+
+	/** Met un job quartz en pause. */
 	PAUSE_JOB("jobs"),
-	/**
-	 * Enlève la pause d'un job quartz.
-	 */
+
+	/** Enlève la pause d'un job quartz. */
 	RESUME_JOB("jobs"),
-	/**
-	 * Réinitialisation des hotspots.
-	 */
+
+	/** Réinitialisation des hotspots. */
 	CLEAR_HOTSPOTS(""),
-	/**
-	 * Purge les fichiers .rrd et .ser.gz obsolètes.
-	 */
+
+	/** Purge les fichiers .rrd et .ser.gz obsolètes. */
 	PURGE_OBSOLETE_FILES("bottom");
 
 	static final String JAVA_VENDOR = System.getProperty("java.vendor");
@@ -118,7 +103,7 @@ enum Action { // NOPMD
 	 */
 	private final String contextName;
 
-	private Action(String contextName) {
+	Action(String contextName) {
 		this.contextName = contextName;
 	}
 
@@ -157,25 +142,25 @@ enum Action { // NOPMD
 	}
 
 	/**
-	* Exécute l'action.
-	* @param collector Collector pour une réinitialisation et test de mail
-	* @param collectorServer Serveur de collecte pour test de mail (null s'il n'y en a pas)
-	* @param currentSession session http de l'utilisateur exécutant l'action (null sinon)
-	* @param counterName Nom du compteur pour une réinitialisation
-	* @param sessionId Identifiant de session pour invalidation (null sinon)
-	* @param threadId Identifiant du thread sous la forme pid_ip_id
-	* @param jobId Identifiant du job sous la forme pid_ip_id
-	* @param cacheId Identifiant du cache à vider
-	* @return Message de résultat
-	* @throws IOException e
-	* @since 1.49
-	*/
+	 * Exécute l'action.
+	 * @param collector Collector pour une réinitialisation et test de mail
+	 * @param collectorServer Serveur de collecte pour test de mail (null s'il n'y en a pas)
+	 * @param currentSession session http de l'utilisateur exécutant l'action (null sinon)
+	 * @param counterName Nom du compteur pour une réinitialisation
+	 * @param sessionId Identifiant de session pour invalidation (null sinon)
+	 * @param threadId Identifiant du thread sous la forme pid_ip_id
+	 * @param jobId Identifiant du job sous la forme pid_ip_id
+	 * @param cacheId Identifiant du cache à vider
+	 * @return Message de résultat
+	 * @throws IOException e
+	 * @since 1.49
+	 */
 	// CHECKSTYLE:OFF
-	String execute(Collector collector, CollectorServer collectorServer,
-			HttpSession currentSession, String counterName, // NOPMD
-			String sessionId, String threadId, String jobId, String cacheId) throws IOException {
+	String execute(Collector collector, CollectorServer collectorServer, HttpSession currentSession, // NOPMD
+			String counterName, String sessionId, String threadId, String jobId, String cacheId)
+			throws IOException {
 		// CHECKSTYLE:ON
-		String messageForReport;
+		final String messageForReport;
 		switch (this) {
 		case CLEAR_COUNTER:
 			assert collector != null;
@@ -190,7 +175,10 @@ enum Action { // NOPMD
 			if (GC_ENABLED) {
 				// garbage collector
 				final long kbFreed = gc();
-				messageForReport = I18N.getFormattedString("ramasse_miette_execute", kbFreed);
+				final long stillUsed = (Runtime.getRuntime().totalMemory()
+						- Runtime.getRuntime().freeMemory()) / 1024;
+				messageForReport = I18N.getFormattedString("ramasse_miette_execute", kbFreed,
+						stillUsed);
 			} else {
 				messageForReport = I18N.getString("ramasse_miette_desactive");
 			}
@@ -270,7 +258,7 @@ enum Action { // NOPMD
 	}
 
 	private String clearCounter(Collector collector, String counterName) {
-		String messageForReport;
+		final String messageForReport;
 		if (ALL.equalsIgnoreCase(counterName)) {
 			for (final Counter counter : collector.getCounters()) {
 				collector.clearCounter(counter.getName());
@@ -317,8 +305,8 @@ enum Action { // NOPMD
 		final boolean gcBeforeHeapDump = true;
 		try {
 			final MBeanServer platformMBeanServer = ManagementFactory.getPlatformMBeanServer();
-			final ObjectInstance instance = platformMBeanServer.getObjectInstance(new ObjectName(
-					"com.sun.management:type=HotSpotDiagnostic"));
+			final ObjectInstance instance = platformMBeanServer
+					.getObjectInstance(new ObjectName("com.sun.management:type=HotSpotDiagnostic"));
 			final Object mxBean = platformMBeanServer.instantiate(instance.getClassName());
 			final Object vmOption = ((com.sun.management.HotSpotDiagnosticMXBean) mxBean)
 					.getVMOption("HeapDumpPath");
@@ -464,7 +452,8 @@ enum Action { // NOPMD
 		try {
 			for (final Scheduler scheduler : JobInformations.getAllSchedulers()) {
 				for (final JobDetail jobDetail : JobInformations.getAllJobsOfScheduler(scheduler)) {
-					if (QuartzAdapter.getSingleton().getJobFullName(jobDetail).hashCode() == myJobId) {
+					if (QuartzAdapter.getSingleton().getJobFullName(jobDetail)
+							.hashCode() == myJobId) {
 						QuartzAdapter.getSingleton().pauseJob(jobDetail, scheduler);
 						return true;
 					}
@@ -511,7 +500,8 @@ enum Action { // NOPMD
 		try {
 			for (final Scheduler scheduler : JobInformations.getAllSchedulers()) {
 				for (final JobDetail jobDetail : JobInformations.getAllJobsOfScheduler(scheduler)) {
-					if (QuartzAdapter.getSingleton().getJobFullName(jobDetail).hashCode() == myJobId) {
+					if (QuartzAdapter.getSingleton().getJobFullName(jobDetail)
+							.hashCode() == myJobId) {
 						QuartzAdapter.getSingleton().resumeJob(jobDetail, scheduler);
 						return true;
 					}

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -28,7 +28,7 @@
 		<echo message="${ant.version}" level="info" />
 		<echo message="${java.runtime.name}, ${java.runtime.version}" level="info" />
 		<echo message="${os.name} ${sun.os.patch.level}, ${os.arch}/${sun.arch.data.model}" level="info" />
-		<property file="VERSION.properties" />
+		<property file="JAVAMELODY-VERSION.properties" />
 		<echo message="JavaMelody version: ${version}" level="info" />
 		<tstamp>
 			<format property="TODAY_FR" pattern="dd MMMM yyyy HH:mm:ss" locale="fr,FR" />
@@ -47,7 +47,8 @@
 					<include name="commons-dbcp2-2.1.1.jar" />
 					<include name="commons-pool2-2.4.2.jar" />
 					<include name="hibernate-3.2.6.ga.jar" />
-					<include name="hibernate-jpa-2.0-api-1.0.1.Final.jar" />
+					<include name="hibernate-jpa-2.1-api-1.0.0.Final.jar" />
+					<include name="mongodb-driver-3.3.0.jar" />
 					<include name="jsf-impl-2.1.5.jar" />
 					<include name="javax.faces-api-2.1.jar" />
 					<include name="javax.el-api-2.2.1.jar" />
@@ -65,6 +66,8 @@
 					<include name="xwork-2.1.0.jar" />
 					<include name="xstream-1.4.2.jar" />
 					<include name="log4j-1.2.16.jar" />
+					<include name="log4j-api-2.5.jar" />
+					<include name="log4j-core-2.5.jar" />
 					<include name="slf4j-api-1.5.11.jar" />
 					<include name="logback-classic-0.9.19.jar" />
 					<include name="logback-core-0.9.19.jar" />
@@ -119,7 +122,7 @@
 		<jar destfile="javamelody.jar">
 			<zipfileset dir="build/classes" />
 			<zipfileset dir="src/main/resources" excludes="**/Thumbs.db" />
-			<zipfileset file="VERSION.properties" />
+			<zipfileset file="JAVAMELODY-VERSION.properties" />
 			<zipfileset file="LICENSE" />
 			<manifest>
 				<attribute name="Built-By" value="${user.name}" />
@@ -145,7 +148,7 @@
 			<zipfileset file="src/main/lib/winstone-jenkins.jar" />
 			<!-- ressources de la webapp -->
 			<zipfileset dir="src/main/resources" prefix="WEB-INF/classes" excludes="**/Thumbs.db,META-INF/web-fragment.xml" />
-			<zipfileset file="VERSION.properties" prefix="WEB-INF/classes" />
+			<zipfileset file="JAVAMELODY-VERSION.properties" prefix="WEB-INF/classes" />
 			<!-- dépendances de la webapp -->
 			<zipfileset dir="src/test/test-webapp/WEB-INF/lib" prefix="WEB-INF/lib">
 				<include name="jrobin-1.5.9.1.jar" />
@@ -161,7 +164,7 @@
 			</zipfileset>
 			<!-- web.xml -->
 			<zipfileset file="src/main/collector-webapp/**" />
-			<zipfileset file="VERSION.properties" />
+			<zipfileset file="JAVAMELODY-VERSION.properties" />
 			<zipfileset file="LICENSE" />
 			<manifest>
 				<attribute name="Main-Class" value="net.bull.javamelody.Main" />
@@ -178,12 +181,12 @@
 
 	<!-- Construction du jar du plugin Jira -->
 	<target name="jira-jar" depends="jar" if="version">
-		<!-- Ce target s'exécute si et seulement si la propriété version existe, ie si le fichier VERSION.properties existe -->
+		<!-- Ce target s'exécute si et seulement si la propriété version existe, ie si le fichier JAVAMELODY-VERSION.properties existe -->
 		<echo message="Construction du jar pour le plugin Jira" level="info" />
 		<!-- Description Jira/Confluence/Bamboo pour le plugin.
-		Le fichier VERSION.properties généré par maven doit exister et contenir version=x.y.z -->
+		Le fichier JAVAMELODY-VERSION.properties généré par maven doit exister et contenir version=x.y.z -->
 		<copy file="src/main/jira/atlassian-plugin.xml" todir="build/" overwrite="true" />
-		<replace file="build/atlassian-plugin.xml" propertyFile="VERSION.properties" failOnNoReplacements="true">
+		<replace file="build/atlassian-plugin.xml" propertyFile="JAVAMELODY-VERSION.properties" failOnNoReplacements="true">
 			<replacefilter token="@version@" property="version" />
 		</replace>
 		<delete file="jira-javamelody.jar" />
@@ -315,7 +318,7 @@
 			<sysproperty key="java.io.tmpdir" value="${basedir}/build/tmp" />
 			<batchtest todir="build/test-results" haltonerror="false" haltonfailure="false"
 				errorProperty="test.failed" failureProperty="test.failed">
-				<fileset dir="build/test-classes" excludes="**/*$*,**/SessionTestImpl.class,**/JobTestImpl.class,**/SpringTestFacade*.class,**/Utils.class" />
+				<fileset dir="build/test-classes" excludes="**/*$*,**/SessionTestImpl.class,**/JobTestImpl.class,**/SpringTestFacade*.class,**/Utils.class,**/Person.class" />
 			</batchtest>
 		</junit>
 		<fail message="Tests failed: check test reports." if="test.failed" />

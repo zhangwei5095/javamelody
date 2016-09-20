@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -43,7 +43,7 @@ enum Period {
 	private final String iconName;
 	private final Range range;
 
-	private Period(int durationDays, String iconName, String mailCode) {
+	Period(int durationDays, String iconName, String mailCode) {
 		this.durationDays = durationDays;
 		this.durationSeconds = durationDays * 24 * 60 * 60;
 		this.iconName = iconName;

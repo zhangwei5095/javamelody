@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -25,6 +25,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.ObjectStreamClass;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Serializable;
@@ -77,8 +78,8 @@ enum TransportFormat {
 			final XStream xstream = createXStream(false);
 			// on wrappe avec un CompactWriter pour gagner 25% en taille de flux (retours chariots)
 			// et donc un peu en performances
-			final CompactWriter writer = new CompactWriter(new OutputStreamWriter(bufferedOutput,
-					XML_CHARSET_NAME));
+			final CompactWriter writer = new CompactWriter(
+					new OutputStreamWriter(bufferedOutput, XML_CHARSET_NAME));
 			try {
 				xstream.marshal(serializable, writer);
 			} finally {
@@ -134,10 +135,43 @@ enum TransportFormat {
 		}
 	}
 
+	private static class MyObjectInputStream extends ObjectInputStream {
+		private static final String PACKAGE_NAME = TransportFormat.class.getName().substring(0,
+				TransportFormat.class.getName().length()
+						- TransportFormat.class.getSimpleName().length() - 1);
+
+		MyObjectInputStream(InputStream input) throws IOException {
+			super(input);
+		}
+
+		// during deserialization, protect ourselves from malicious payload
+		// http://www.ibm.com/developerworks/library/se-lookahead/index.html
+		@Override
+		protected Class<?> resolveClass(ObjectStreamClass desc)
+				throws IOException, ClassNotFoundException {
+			final String name = desc.getName();
+			int i = 0;
+			if (name.indexOf("[[") == 0) {
+				// 2 dimensions array
+				i++;
+			}
+			if (name.indexOf("[L", i) == i) {
+				// 1 dimension array
+				i += 2;
+			}
+			if (name.indexOf("java.lang.", i) == i || name.indexOf("java.util.", i) == i
+					|| name.indexOf(PACKAGE_NAME, i) == i || name.length() <= 2) {
+				// if name.length() == 2, primitive type or array (such as [B in javamelody-swing)
+				return super.resolveClass(desc);
+			}
+			throw new ClassNotFoundException(name);
+		}
+	}
+
 	private final String code; // NOPMD
 	private final String mimeType; // NOPMD
 
-	private TransportFormat(String mimeType) {
+	TransportFormat(String mimeType) {
 		this.mimeType = mimeType;
 		this.code = this.toString().toLowerCase(Locale.ENGLISH);
 	}
@@ -227,12 +261,13 @@ enum TransportFormat {
 		}
 	}
 
-	Serializable readSerializableFrom(InputStream input) throws IOException, ClassNotFoundException {
+	Serializable readSerializableFrom(InputStream input)
+			throws IOException, ClassNotFoundException {
 		final InputStream bufferedInput = new BufferedInputStream(input);
-		Object result;
+		final Object result;
 		switch (this) {
 		case SERIALIZED:
-			final ObjectInputStream in = new ObjectInputStream(bufferedInput);
+			final ObjectInputStream in = createObjectInputStream(bufferedInput);
 			try {
 				result = in.readObject();
 			} finally {
@@ -250,9 +285,13 @@ enum TransportFormat {
 			throw new IllegalStateException(toString());
 		}
 		if (NULL_VALUE.equals(result)) {
-			result = null;
+			return null;
 		}
 		// c'est un Serializable que l'on a écrit
 		return (Serializable) result;
+	}
+
+	static ObjectInputStream createObjectInputStream(InputStream input) throws IOException {
+		return new MyObjectInputStream(input);
 	}
 }

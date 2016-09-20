@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -23,13 +23,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import net.bull.javamelody.SamplingProfiler.SampledMethod;
-
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Element;
 import com.lowagie.text.Font;
 import com.lowagie.text.Phrase;
+
+import net.bull.javamelody.SamplingProfiler.SampledMethod;
 
 /**
  * Rapports pdf secondaires (avec iText).
@@ -94,7 +94,8 @@ class PdfOtherReport {
 		document.close();
 	}
 
-	void writeProcessInformations(List<ProcessInformations> processInformations) throws IOException {
+	void writeProcessInformations(List<ProcessInformations> processInformations)
+			throws IOException {
 		try {
 			document.open();
 			addParagraph(getString("Processus"), "processes.png");
@@ -172,8 +173,8 @@ class PdfOtherReport {
 	}
 
 	void writeAllCurrentRequestsAsPart(
-			Map<JavaInformations, List<CounterRequestContext>> currentRequests,
-			Collector collector, List<Counter> counters, long timeOfSnapshot) throws IOException {
+			Map<JavaInformations, List<CounterRequestContext>> currentRequests, Collector collector,
+			List<Counter> counters, long timeOfSnapshot) throws IOException {
 		try {
 			document.open();
 
@@ -240,8 +241,8 @@ class PdfOtherReport {
 			final String title = getFormattedString("Statistiques_compteur", counterLabel) + " - "
 					+ range.getLabel();
 			addParagraph(title, counter.getIconName());
-			new PdfCounterReport(collector, counter, range, false, document).writeRequests(
-					counter.getChildCounterName(), requestList);
+			new PdfCounterReport(collector, counter, range, false, document)
+					.writeRequests(counter.getChildCounterName(), requestList);
 		} catch (final DocumentException e) {
 			throw createIOException(e);
 		}
@@ -253,8 +254,8 @@ class PdfOtherReport {
 		return new IOException(e.getMessage(), e);
 	}
 
-	private void addParagraph(String paragraphTitle, String iconName) throws DocumentException,
-			IOException {
+	private void addParagraph(String paragraphTitle, String iconName)
+			throws DocumentException, IOException {
 		addToDocument(pdfDocumentFactory.createParagraphElement(paragraphTitle, iconName));
 	}
 

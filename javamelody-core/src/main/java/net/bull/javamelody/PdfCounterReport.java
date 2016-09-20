@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -202,8 +202,8 @@ class PdfCounterReport extends PdfAbstractTableReport {
 		final List<CounterRequest> requests = counterRequestAggregation.getRequests();
 		final CounterRequest globalRequest = counterRequestAggregation.getGlobalRequest();
 		// delta ni négatif ni à 0
-		final long deltaMillis = Math.max(System.currentTimeMillis()
-				- counter.getStartDate().getTime(), 1);
+		final long deltaMillis = Math
+				.max(System.currentTimeMillis() - counter.getStartDate().getTime(), 1);
 		final long hitsParMinute = 60 * 1000 * globalRequest.getHits() / deltaMillis;
 		final String key;
 		if (isJobCounter()) {

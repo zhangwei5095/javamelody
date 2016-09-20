@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -16,6 +16,8 @@
  * limitations under the License.
  */
 package net.bull.javamelody;
+
+import static net.bull.javamelody.HttpParameters.TOKEN_PARAMETER;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -44,6 +46,7 @@ import javax.servlet.http.HttpSessionListener;
  */
 public class SessionListener implements HttpSessionListener, HttpSessionActivationListener,
 		ServletContextListener, Serializable {
+	static final String CSRF_TOKEN_SESSION_NAME = "javamelody." + TOKEN_PARAMETER;
 	private static final String SESSION_ACTIVATION_KEY = "javamelody.sessionActivation";
 	private static final long serialVersionUID = -1624944319058843901L;
 	// au lieu d'utiliser un int avec des synchronized partout, on utilise un AtomicInteger
@@ -62,8 +65,8 @@ public class SessionListener implements HttpSessionListener, HttpSessionActivati
 
 	private boolean instanceEnabled;
 
-	static final class SessionInformationsComparator implements Comparator<SessionInformations>,
-			Serializable {
+	static final class SessionInformationsComparator
+			implements Comparator<SessionInformations>, Serializable {
 		private static final long serialVersionUID = 1L;
 
 		/** {@inheritDoc} */

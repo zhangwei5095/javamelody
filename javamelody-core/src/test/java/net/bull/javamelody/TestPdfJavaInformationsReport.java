@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -27,13 +27,13 @@ import java.util.List;
 import javax.management.MBeanServer;
 import javax.management.ObjectName;
 
-import net.bull.javamelody.TestTomcatInformations.GlobalRequestProcessor;
-import net.bull.javamelody.TestTomcatInformations.ThreadPool;
-
 import org.junit.Before;
 import org.junit.Test;
 
 import com.lowagie.text.Document;
+
+import net.bull.javamelody.TestTomcatInformations.GlobalRequestProcessor;
+import net.bull.javamelody.TestTomcatInformations.ThreadPool;
 
 /**
  * Test unitaire de la classe PdfJavaInformationsReport.
@@ -53,15 +53,21 @@ public class TestPdfJavaInformationsReport {
 	@Test
 	public void testTomcatInformations() throws Exception { // NOPMD
 		final ByteArrayOutputStream output = new ByteArrayOutputStream();
-		final PdfDocumentFactory pdfDocumentFactory = new PdfDocumentFactory(TEST_APP, null, output);
+		final PdfDocumentFactory pdfDocumentFactory = new PdfDocumentFactory(TEST_APP, null,
+				output);
 		final MBeanServer mBeanServer = MBeans.getPlatformMBeanServer();
 		final List<ObjectName> mBeans = new ArrayList<ObjectName>();
 		try {
-			mBeans.add(mBeanServer.registerMBean(new ThreadPool(),
-					new ObjectName("Catalina:type=ThreadPool,name=jk-8009")).getObjectName());
-			mBeans.add(mBeanServer.registerMBean(new GlobalRequestProcessor(),
-					new ObjectName("Catalina:type=GlobalRequestProcessor,name=jk-8009"))
+			mBeans.add(mBeanServer
+					.registerMBean(new ThreadPool(),
+							new ObjectName("Catalina:type=ThreadPool,name=jk-8009"))
 					.getObjectName());
+			mBeans.add(
+					mBeanServer
+							.registerMBean(new GlobalRequestProcessor(),
+									new ObjectName(
+											"Catalina:type=GlobalRequestProcessor,name=jk-8009"))
+							.getObjectName());
 			TomcatInformations.initMBeans();
 			final List<JavaInformations> myJavaInformationsList = Arrays
 					.asList(new JavaInformations(null, true));
@@ -73,13 +79,18 @@ public class TestPdfJavaInformationsReport {
 			document.close();
 			assertNotEmptyAndClear(output);
 
-			mBeans.add(mBeanServer.registerMBean(new ThreadPool(),
-					new ObjectName("Catalina:type=ThreadPool,name=jk-8010")).getObjectName());
+			mBeans.add(mBeanServer
+					.registerMBean(new ThreadPool(),
+							new ObjectName("Catalina:type=ThreadPool,name=jk-8010"))
+					.getObjectName());
 			final GlobalRequestProcessor jk8010 = new GlobalRequestProcessor();
 			jk8010.setrequestCount(0);
-			mBeans.add(mBeanServer.registerMBean(jk8010,
-					new ObjectName("Catalina:type=GlobalRequestProcessor,name=jk-8010"))
-					.getObjectName());
+			mBeans.add(
+					mBeanServer
+							.registerMBean(jk8010,
+									new ObjectName(
+											"Catalina:type=GlobalRequestProcessor,name=jk-8010"))
+							.getObjectName());
 			TomcatInformations.initMBeans();
 			final List<JavaInformations> myJavaInformationsList2 = Arrays
 					.asList(new JavaInformations(null, true));

@@ -1,12 +1,10 @@
 package hello;
 
-import net.bull.javamelody.MonitoredWithSpring;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@MonitoredWithSpring
+// @MonitoredWithSpring (not necessary since controllers are monitored by default in JavaMelodyConfiguration)
 @SuppressWarnings("javadoc")
 public class HelloController {
 

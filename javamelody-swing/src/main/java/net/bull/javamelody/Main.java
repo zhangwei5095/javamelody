@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -31,10 +31,10 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 
+import org.apache.log4j.Logger;
+
 import net.bull.javamelody.swing.util.MSwingUtilities;
 import net.bull.javamelody.swing.util.ShadowPopupFactory;
-
-import org.apache.log4j.Logger;
 
 /**
  * Classe Main.
@@ -105,15 +105,16 @@ public final class Main {
 		if (locale != null) {
 			System.setProperty("user.language", locale);
 		}
-		final boolean collectorServer = Boolean.parseBoolean(System
-				.getProperty("javamelody.collectorServer"));
+		final boolean collectorServer = Boolean
+				.parseBoolean(System.getProperty("javamelody.collectorServer"));
 		final List<URL> urls = Arrays.asList(new URL(url));
 		final Range selectedRange = Range.parse(range);
 		log("Monitoring of " + application + " on " + url);
 		log("creating frame");
 		final RemoteCollector remoteCollector = new RemoteCollector(application, urls);
 		remoteCollector.setCookies(System.getProperty("cookies"));
-		final MainPanel contentPane = new MainPanel(remoteCollector, selectedRange, collectorServer);
+		final MainPanel contentPane = new MainPanel(remoteCollector, selectedRange,
+				collectorServer);
 		final MainFrame frame = new MainFrame();
 		frame.setTitle(I18N.getFormattedString("Monitoring_sur", application));
 		frame.addWindowListener(new WindowAdapter() {

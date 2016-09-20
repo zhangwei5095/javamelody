@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -45,8 +45,8 @@ class PdfReport {
 			final PdfDocumentFactory pdfDocumentFactory = new PdfDocumentFactory(
 					collector.getApplication(), range, output);
 			this.document = pdfDocumentFactory.createDocument();
-			this.pdfCoreReport = new PdfCoreReport(collector, collectorServer,
-					javaInformationsList, range, pdfDocumentFactory, document);
+			this.pdfCoreReport = new PdfCoreReport(collector, collectorServer, javaInformationsList,
+					range, pdfDocumentFactory, document);
 		} catch (final DocumentException e) {
 			throw createIOException(e);
 		}

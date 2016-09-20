@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -105,14 +105,13 @@ public class TestHtmlJndiTreeReport {
 		}
 		expect(enumeration.hasMore()).andReturn(true).times(7);
 		expect(enumeration.next()).andReturn(new Binding("test value", "test")).once();
-		expect(enumeration.next()).andReturn(
-				new Binding("test value collection", Arrays.asList("test collection",
-						"test collection"))).once();
-		expect(enumeration.next()).andReturn(
-				new Binding("test context", createNiceMock(Context.class))).once();
+		expect(enumeration.next()).andReturn(new Binding("test value collection",
+				Arrays.asList("test collection", "test collection"))).once();
+		expect(enumeration.next())
+				.andReturn(new Binding("test context", createNiceMock(Context.class))).once();
 		expect(enumeration.next()).andReturn(new Binding("", "test")).once();
-		expect(enumeration.next()).andReturn(
-				new Binding("java:/test context", createNiceMock(Context.class))).once();
+		expect(enumeration.next())
+				.andReturn(new Binding("java:/test context", createNiceMock(Context.class))).once();
 		expect(enumeration.next()).andReturn(new Binding("test null classname", null, null)).once();
 		expect(enumeration.next()).andThrow(new NamingException("test")).once();
 

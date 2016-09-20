@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -44,7 +44,7 @@ import javax.sql.DataSource;
 class DatabaseInformations implements Serializable {
 	private static final long serialVersionUID = -6105478981257689782L;
 
-	static enum Database {
+	enum Database {
 		// base de données connues avec les noms retournés par connection.getMetaData().getDatabaseProductName()
 		// (inspirés par Hibernate)
 		POSTGRESQL("PostgreSQL"),
@@ -55,7 +55,8 @@ class DatabaseInformations implements Serializable {
 		H2("H2"),
 		HSQLDB("HSQL Database Engine"),
 		SQLSERVER("Microsoft SQL Server"),
-		SYBASE("Sybase SQL Server", "Adaptive Server Enterprise");
+		SYBASE("Sybase SQL Server", "Adaptive Server Enterprise"),
+		INFORMIX("Informix Dynamic Server");
 
 		// RESOURCE_BUNDLE_BASE_NAME vaut "net.bull.javamelody.resource.databaseInformations"
 		// ce qui charge net.bull.javamelody.resource.databaseInformations.properties
@@ -65,11 +66,13 @@ class DatabaseInformations implements Serializable {
 
 		private List<String> databaseNames;
 
-		private Database(String... databaseNames) {
+		Database(String... databaseNames) {
 			this.databaseNames = Arrays.asList(databaseNames);
 		}
 
+		// CHECKSTYLE:OFF
 		List<String> getRequestNames() {
+			// CHECKSTYLE:ON
 			final List<String> tmp;
 			switch (this) {
 			case POSTGRESQL:
@@ -86,12 +89,11 @@ class DatabaseInformations implements Serializable {
 						"innodb_status");
 				break;
 			case ORACLE:
-				tmp = Arrays
-						.asList("sessions", "locks", "sqlTimes", "foreignKeysWithoutIndexes",
-								"invalidObjects", "disabledConstraints", "instance", "database",
-								"nlsParameters", "tablespaceFreespace", "datafileIo",
-								"tablespaceExtents", "ratios", "parameters",
-								"rollbackSegmentStatistics", "statistics", "events");
+				tmp = Arrays.asList("sessions", "locks", "sqlTimes", "foreignKeysWithoutIndexes",
+						"invalidObjects", "disabledConstraints", "instance", "database",
+						"nlsParameters", "tablespaceFreespace", "datafileIo", "tablespaceExtents",
+						"ratios", "parameters", "rollbackSegmentStatistics", "statistics",
+						"events");
 				break;
 			case DB2:
 				tmp = Arrays.asList("mon_current_sql", "mon_db_summary", "mon_lockwaits",
@@ -113,19 +115,23 @@ class DatabaseInformations implements Serializable {
 						"running_stored_procedure", "used_temporary_tables", "used_tables",
 						"sp_version");
 				break;
+			case INFORMIX:
+				tmp = Arrays.asList("version", "sessions", "resources_by_user", "current_queries",
+						"config");
+				break;
 			default:
 				throw new IllegalStateException();
 			}
 			return addPrefix(tmp);
 		}
 
-		private List<String> addPrefix(List<String> requestNames) {
-			final List<String> result = new ArrayList<String>(requestNames.size());
+		private List<String> addPrefix(List<String> requests) {
+			final List<String> list = new ArrayList<String>(requests.size());
 			final String prefix = this.toString().toLowerCase(Locale.ENGLISH) + '.';
-			for (final String requestName : requestNames) {
-				result.add(prefix + requestName);
+			for (final String requestName : requests) {
+				list.add(prefix + requestName);
 			}
-			return result;
+			return list;
 		}
 
 		String getUrlIdentifier() {
@@ -165,8 +171,8 @@ class DatabaseInformations implements Serializable {
 					return database;
 				}
 			}
-			throw new IllegalArgumentException(I18N.getFormattedString(
-					"type_base_de_donnees_inconnu", databaseName));
+			throw new IllegalArgumentException(
+					I18N.getFormattedString("type_base_de_donnees_inconnu", databaseName));
 		}
 	}
 
@@ -287,8 +293,8 @@ class DatabaseInformations implements Serializable {
 		// on commence par voir si le driver jdbc a été utilisé
 		// car s'il n'y a pas de datasource une exception est déclenchée
 		if (Parameters.getLastConnectUrl() != null) {
-			final Connection connection = DriverManager.getConnection(
-					Parameters.getLastConnectUrl(), Parameters.getLastConnectInfo());
+			final Connection connection = DriverManager
+					.getConnection(Parameters.getLastConnectUrl(), Parameters.getLastConnectInfo());
 			connection.setAutoCommit(false);
 			return connection;
 		}

@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -29,9 +29,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import net.bull.javamelody.SamplingProfiler.SampledMethod;
-
 import org.apache.log4j.Logger;
+
+import net.bull.javamelody.SamplingProfiler.SampledMethod;
 
 /**
  * Collecteur de données du serveur de collecte centralisé.
@@ -59,8 +59,8 @@ class CollectorServer {
 		boolean initOk = false;
 		this.timer = new Timer("collector", true);
 		try {
-			LOGGER.info("reading applications list from: "
-					+ Parameters.getCollectorApplicationsFile());
+			LOGGER.info(
+					"reading applications list from: " + Parameters.getCollectorApplicationsFile());
 			final Map<String, List<URL>> urlsByApplication = Parameters
 					.getCollectorUrlsByApplications();
 			LOGGER.info("monitored applications: " + urlsByApplication.keySet());
@@ -201,8 +201,8 @@ class CollectorServer {
 			LOGGER.debug("counters " + application + " : " + collector.getCounters());
 			LOGGER.debug("javaInformations " + application + " : " + javaInformationsList);
 			if (messageForReport != null) {
-				LOGGER.debug("message " + application + " : "
-						+ messageForReport.replace("\n", ", "));
+				LOGGER.debug(
+						"message " + application + " : " + messageForReport.replace("\n", ", "));
 			}
 		}
 		return messageForReport;
@@ -223,8 +223,8 @@ class CollectorServer {
 
 	DatabaseInformations collectDatabaseInformations(String application, int requestIndex)
 			throws IOException {
-		return getRemoteCollectorByApplication(application).collectDatabaseInformations(
-				requestIndex);
+		return getRemoteCollectorByApplication(application)
+				.collectDatabaseInformations(requestIndex);
 	}
 
 	List<List<ConnectionInformations>> collectConnectionInformations(String application)
@@ -264,7 +264,8 @@ class CollectorServer {
 				.getCollectorUrlsByApplications();
 		for (final URL addedUrl : urls) {
 			final String addedUrlInExternalForm = addedUrl.toExternalForm();
-			for (final Map.Entry<String, List<URL>> entry : collectorUrlsByApplications.entrySet()) {
+			for (final Map.Entry<String, List<URL>> entry : collectorUrlsByApplications
+					.entrySet()) {
 				for (final URL existingUrl : entry.getValue()) {
 					if (existingUrl.toExternalForm().equals(addedUrlInExternalForm)) {
 						throw new IOException("The URL "
@@ -387,7 +388,8 @@ class CollectorServer {
 				try {
 					// envoi du rapport
 					final Collector collector = getCollectorByApplication(application);
-					final List<JavaInformations> javaInformationsList = getJavaInformationsByApplication(application);
+					final List<JavaInformations> javaInformationsList = getJavaInformationsByApplication(
+							application);
 					new MailReport().sendReportMail(collector, true, javaInformationsList, period);
 				} catch (final Throwable t) { // NOPMD
 					// pas d'erreur dans cette task

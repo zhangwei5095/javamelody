@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -73,8 +73,8 @@ public class MTable<T> extends MListTable<T> {
 	};
 
 	/**
-	* Constructeur.
-	*/
+	 * Constructeur.
+	 */
 	public MTable() {
 		// on utilise le modèle par défaut créé par la méthode createDefaultDataModel() ci-dessus
 		this(null);
@@ -140,7 +140,8 @@ public class MTable<T> extends MListTable<T> {
 	 * @param cellRenderer
 	 *           Renderer des cellules dans cette colonne
 	 */
-	public void setColumnCellRenderer(final String attribute, final TableCellRenderer cellRenderer) {
+	public void setColumnCellRenderer(final String attribute,
+			final TableCellRenderer cellRenderer) {
 		getColumn(attribute).setCellRenderer(cellRenderer);
 	}
 

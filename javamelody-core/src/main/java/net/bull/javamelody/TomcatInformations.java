@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -189,11 +189,11 @@ final class TomcatInformations implements Serializable {
 	/** {@inheritDoc} */
 	@Override
 	public String toString() {
-		return getClass().getSimpleName() + "[name=" + getName() + ", maxThreads="
-				+ getMaxThreads() + ", currentThreadCount=" + getCurrentThreadCount()
-				+ ", currentThreadsBusy=" + getCurrentThreadsBusy() + ", bytesReceived="
-				+ getBytesReceived() + ", bytesSent=" + getBytesSent() + ", requestCount="
-				+ getRequestCount() + ", errorCount=" + getErrorCount() + ", processingTime="
-				+ getProcessingTime() + ", maxTime=" + getMaxTime() + ']';
+		return getClass().getSimpleName() + "[name=" + getName() + ", maxThreads=" + getMaxThreads()
+				+ ", currentThreadCount=" + getCurrentThreadCount() + ", currentThreadsBusy="
+				+ getCurrentThreadsBusy() + ", bytesReceived=" + getBytesReceived() + ", bytesSent="
+				+ getBytesSent() + ", requestCount=" + getRequestCount() + ", errorCount="
+				+ getErrorCount() + ", processingTime=" + getProcessingTime() + ", maxTime="
+				+ getMaxTime() + ']';
 	}
 }

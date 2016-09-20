@@ -130,13 +130,10 @@ public final class Main {
 
 		// override the usage screen
 		final Field usage = launcher.getField("USAGE");
-		usage.set(
-				null,
-				"JavaMelody Monitoring Collect Server "
-						+ "\n"
+		usage.set(null,
+				"JavaMelody Monitoring Collect Server " + "\n"
 						+ "Usage: java -jar javamelody.war [--option=value] [--option=value]\n"
-						+ "\n"
-						+ "Options:\n"
+						+ "\n" + "Options:\n"
 						+ "   --config                 = load configuration properties from here. Default is ./winstone.properties\n"
 						+ "   --prefix                 = add this prefix to all URLs (eg http://localhost:8080/prefix/resource). Default is none\n"
 						+ "   --commonLibFolder        = folder for additional jar files. Default is ./lib\n"
@@ -177,16 +174,17 @@ public final class Main {
 						+ "                              (e.g., xls=application/vnd.ms-excel:wmf=application/x-msmetafile)\n"
 						+ "   --maxParamCount=N        = set the max number of parameters allowed in a form submission to protect\n"
 						+ "                              against hash DoS attack (oCERT #2011-003). Default is 10000.\n"
-						+ "   --usage / --help         = show this message\n"
-						+ "   \n"
-						+ "Security options:\n"
-						+ "   --realmClassName               = Set the realm class to use for user authentication. Defaults to ArgumentsRealm class\n"
-						+ "   \n"
-						+ "   --argumentsRealm.passwd.<user> = Password for user <user>. Only valid for the ArgumentsRealm realm class\n"
-						+ "   --argumentsRealm.roles.<user>  = Roles for user <user> (comma separated). Only valid for the ArgumentsRealm realm class\n"
-						+ "   \n"
-						+ "   --fileRealm.configFile         = File containing users/passwds/roles. Only valid for the FileRealm realm class\n"
-						+ "   \n"
+						+ "   --usage / --help         = show this message\n" + "   \n"
+						// For security of the collect server, see https://github.com/javamelody/javamelody/wiki/UserGuideAdvanced#5-security-with-a-collect-server
+						// (-Djavamelody.authorized-users=user1:pwd1,user2:pwd2)
+						//						+ "Security options:\n"
+						//						+ "   --realmClassName               = Set the realm class to use for user authentication. Defaults to ArgumentsRealm class\n"
+						//						+ "   \n"
+						//						+ "   --argumentsRealm.passwd.<user> = Password for user <user>. Only valid for the ArgumentsRealm realm class\n"
+						//						+ "   --argumentsRealm.roles.<user>  = Roles for user <user> (comma separated). Only valid for the ArgumentsRealm realm class\n"
+						//						+ "   \n"
+						//						+ "   --fileRealm.configFile         = File containing users/passwds/roles. Only valid for the FileRealm realm class\n"
+						//						+ "   \n"
 						+ "Access logging:\n"
 						+ "   --accessLoggerClassName        = Set the access logger class to use for user authentication. Defaults to disabled\n"
 						+ "   --simpleAccessLogger.format    = The log format to use. Supports combined/common/resin/custom (SimpleAccessLogger only)\n"
@@ -261,13 +259,13 @@ public final class Main {
 		final URL res = Main.class.getResource(resource);
 
 		// put this jar in a file system so that we can load jars from there
-		File tmp;
+		final File tmp;
 		try {
 			tmp = File.createTempFile(fileName, suffix);
 		} catch (final IOException e) {
 			final String tmpdir = System.getProperty("java.io.tmpdir");
-			throw new IllegalStateException("JavaMelody has failed to create a temporary file in "
-					+ tmpdir, e);
+			throw new IllegalStateException(
+					"JavaMelody has failed to create a temporary file in " + tmpdir, e);
 		}
 		final InputStream is = res.openStream();
 		try {

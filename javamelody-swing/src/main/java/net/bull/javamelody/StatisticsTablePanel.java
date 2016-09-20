@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -171,7 +171,8 @@ class StatisticsTablePanel extends MelodyPanel {
 		}
 		if (counterRequestAggregation.isResponseSizeDisplayed()) {
 			table.addColumn("responseSizeMean", getString("Taille_moyenne"));
-			table.setColumnCellRenderer("responseSizeMean", new ResponseSizeMeanTableCellRenderer());
+			table.setColumnCellRenderer("responseSizeMean",
+					new ResponseSizeMeanTableCellRenderer());
 		}
 		if (counterRequestAggregation.isChildHitsDisplayed()) {
 			table.addColumn("childHitsMean",

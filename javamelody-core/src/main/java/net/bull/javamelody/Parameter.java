@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2014 by Emeric Vernat
+ * Copyright 2008-2016 by Emeric Vernat
  *
  *     This file is part of Java Melody.
  *
@@ -190,9 +190,14 @@ public enum Parameter {
 	GZIP_COMPRESSION_DISABLED("gzip-compression-disabled"),
 
 	/**
-	 * Active les actions Ramasse-miettes, Invalidation sessions et Heap-dump (false par défaut).
+	 * Active les actions systèmes telles que Ramasse-miettes, Invalidation sessions et Heap-dump (true par défaut).
 	 */
 	SYSTEM_ACTIONS_ENABLED("system-actions-enabled"),
+
+	/**
+	 * Active la protection contre CSRF (false par défaut).
+	 */
+	CSRF_PROTECTION_ENABLED("csrf-protection-enabled"),
 
 	/**
 	 * Expression régulière (null par défaut) pour restreindre l'accès au monitoring à certaines adresses IP.
@@ -305,11 +310,19 @@ public enum Parameter {
 	 * The class must implement the interface net.bull.javamelody.JavaMelodyLogger,
 	 * such as net.bull.javamelody.Log4JLogger, net.bull.javamelody.JavaLogger or net.bull.javamelody.LogbackLogger.
 	 */
-	LOGGER_CLASS("logger-class");
+	LOGGER_CLASS("logger-class"),
+
+	/**
+	 * Fully qualified name of a class implementing {@link JpaNamingStrategy} (Default: {@link JpaDefaultNamingStrategy}).
+	 *
+	 * The implementation is responsible for generating the request name of a JPA query
+	 * (JPQL and CriteriaQuery) displayed in the JPA section.
+	 */
+	JPA_NAMING_STRATEGY("jpa-naming-strategy");
 
 	private final String code;
 
-	private Parameter(String code) {
+	Parameter(String code) {
 		this.code = code;
 	}
 
